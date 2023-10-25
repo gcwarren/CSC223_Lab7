@@ -31,6 +31,8 @@ public class InputFacade
 	public static FigureNode extractFigure(String filepath)
 	{
         // TODO
+		//so are we calling parser on a JSON object?
+		//call the file we want to read and then store the info into a JSON object?
 	}
 	
 	/**
@@ -48,5 +50,5 @@ public class InputFacade
 
     //	
 	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
-	//
+	// like WHAT???
 }
