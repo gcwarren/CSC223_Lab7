@@ -80,6 +80,8 @@ public class Point implements Comparable<Point>
 	public static int LexicographicOrdering(Point p1, Point p2)
 	{
 		// TODO
+		//use comapareTo to compare which point is greater 
+		//need to figure out prevalence regarding x and y as a point
 	}
 
 	@Override
@@ -94,5 +96,9 @@ public class Point implements Comparable<Point>
 	public boolean equals(Object obj)
 	{
         // TODO
+		if _x.equals(_y){ //could also say getX and getY?
+			return true;
+		}
+		return false;
 	}
 }
