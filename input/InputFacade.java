@@ -30,9 +30,24 @@ public class InputFacade
 	 */
 	public static FigureNode extractFigure(String filepath)
 	{
-        // TODO
-		//so are we calling parser on a JSON object?
-		//call the file we want to read and then store the info into a JSON object?
+//        // TODO
+//		//so are we calling parser on a JSON object?
+//		//call the file we want to read and then store the info into a JSON object?
+//		JSONParser fileParser = new JSONParser(new GeometryBuilder());
+//		//THIS IS WRONG...you need to find the file then read
+//		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath); 
+//		JSONParser parser = parser.parse(figureStr);
+//		return toGeometryRepresentation(fileParser.);
+		
+		
+		JSONParser parser = new JSONParser(new GeometryBuilder());
+
+		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
+		
+		toGeometryRepresentation(parser.parse(figureStr));
+				
+		return parser.parse(figureStr);
+
 	}
 	
 	/**
@@ -45,7 +60,12 @@ public class InputFacade
 	 */
 	public static Map.Entry<PointDatabase, Set<Segment>> toGeometryRepresentation(FigureNode fig)
 	{
-		// TODO
+		// TODO IS MAP SUPPOSE TO CONTAIN INTERABLE COMPOENETS OR DO WE JUST PASS VALUES
+		PointDatabase pndb = fig.getPointsDatabase();
+		SegmentDatabase sndb = fig.getSegments();
+		
+		return new Map.Entry<pndb, sndb>() {};
+	
 	}
 
     //	
