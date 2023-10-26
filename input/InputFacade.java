@@ -61,12 +61,13 @@ public class InputFacade
 	public static Map.Entry<PointDatabase, Set<Segment>> toGeometryRepresentation(FigureNode fig)
 	{
 		// TODO IS MAP SUPPOSE TO CONTAIN INTERABLE COMPOENETS OR DO WE JUST PASS VALUES
-		PointDatabase pndb = fig.getPointsDatabase();
-		SegmentDatabase sndb = fig.getSegments();
+		PointDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
+		SegmentDatabase sndb = fig.getSegments(); //get all segemnts w/ helper methods
 		
-		return new Map.Entry<pndb, sndb>() {};
+		return new Map.Entry<PointDatabase, Set<Segment>>(pndb, sndb);
 	
 	}
+	//use a convert method 
 
     //	
 	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
