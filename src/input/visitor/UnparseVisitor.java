@@ -1,4 +1,4 @@
-package visitor;
+package input.visitor;
 
 import java.util.AbstractMap;
 import input.components.*;
@@ -63,7 +63,6 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		@SuppressWarnings("unchecked")
 		AbstractMap.SimpleEntry<StringBuilder, Integer> pair = (AbstractMap.SimpleEntry<StringBuilder, Integer>)(o);
 		StringBuilder sb = pair.getKey();
-		int level = pair.getValue();
 
 		if (node.getPoint2() != null) {
 			sb.append(node.getPoint2().getName() + ", ");

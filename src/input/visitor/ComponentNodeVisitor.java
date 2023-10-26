@@ -1,4 +1,4 @@
-package visitor;
+package input.visitor;
 
 import input.components.*;
 import input.components.point.*;

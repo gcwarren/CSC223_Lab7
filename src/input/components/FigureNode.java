@@ -9,7 +9,7 @@ package input.components;
 
 import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNodeDatabase;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 /**
  * A basic figure consists of points, segments, and an optional description
