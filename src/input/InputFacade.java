@@ -43,10 +43,8 @@ public class InputFacade
 		JSONParser parser = new JSONParser(new GeometryBuilder());
 
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filepath);
-		
-		toGeometryRepresentation(parser.parse(figureStr));
-				
-		return parser.parse(figureStr);
+						
+		return (FigureNode) parser.parse(figureStr);
 
 	}
 	
