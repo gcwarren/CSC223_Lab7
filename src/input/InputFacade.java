@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.AbstractMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,7 +15,9 @@ import input.builder.GeometryBuilder;
 import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.components.point.PointNode;
+import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNode;
+import input.components.segments.SegmentNodeDatabase;
 import input.parser.JSONParser;
 
 public class InputFacade
@@ -59,10 +62,10 @@ public class InputFacade
 	public static Map.Entry<PointDatabase, Set<Segment>> toGeometryRepresentation(FigureNode fig)
 	{
 		// TODO IS MAP SUPPOSE TO CONTAIN INTERABLE COMPOENETS OR DO WE JUST PASS VALUES
-		PointDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
-		SegmentDatabase sndb = fig.getSegments(); //get all segemnts w/ helper methods
+		PointNodeDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
+		SegmentNodeDatabase sndb = fig.getSegments(); //get all segemnts w/ helper methods
 		
-		return new Map.Entry<PointDatabase, Set<Segment>>(pndb, sndb);
+		return new Map.Entry<PointDatabase, Set<Segment>>(convertToPoints(pndb), convertToSegments(sndb, convertToPoints(pndb)));
 	
 	}
 	//use a convert method 
@@ -70,4 +73,27 @@ public class InputFacade
     //	
 	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
 	// like WHAT???
+	private PointDatabase convertToPoints(PointNodeDatabase pndb) {
+		PointDatabase newPD = new PointDatabase();
+		List<String> pndbNameList = pndb.getAllNodeNames();
+		for (String name: pndbNameList) {
+			PointNode node = pndb.getNodeByName(name);
+			Point newPoint = new Point(node.getName(), node.getX(), node.getY());
+			newPD.put(newPoint.getName(), newPoint.getX(), newPoint.getY()); //REDUNDANT?
+		}
+		return newPD;
+	}
+	
+	private Segment convertToSegments(SegmentNodeDatabase sndb, PointDatabase pndb) {
+		PointDatabase newPD = new PointDatabase();
+		List<String> pndbNameList = pndb.getAllNodeNames();
+		for (String name: pndbNameList) {
+			PointNode node = pndb.getNodeByName(name);
+			List<String> edgeList = sndb.edgesAsList(node);
+			for (String segName : edgeList) {
+				new Segment(node, pndb.getNodeByName(segName));
+			}
+		}
+						
+	}
 }

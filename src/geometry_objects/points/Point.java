@@ -76,29 +76,35 @@ public class Point implements Comparable<Point>
 	 * @param p2 Point 2
 	 * @return Lexicographically: p1 < p2 return -1 : p1 == p2 return 0 : p1 > p2 return 1
 	 *         Order of X-coordinates first; order of Y-coordinates second
+	 * @throws Exception 
 	 */
-	public static int LexicographicOrdering(Point p1, Point p2)
+	public static int LexicographicOrdering(Point p1, Point p2) 
 	{
 		// TODO
 		//use comapareTo to compare which point is greater 
-		//need to figure out prevalence regarding x and y as a point
+		//go by x then y
+		
+		if (p1 == null) return -1; 
+		//if (p2 == null) return 1;
+		return p1.compareTo(p2);
 	}
 
 	@Override
 	public int compareTo(Point that)
 	{
 		if (that == null) return 1;
-
+		
 		return Point.LexicographicOrdering(this, that);
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
-        // TODO
-		if _x.equals(_y){ //could also say getX and getY?
-			return true;
-		}
-		return false;
+        if (obj == null) return false; 
+        if (!(obj instanceof Point)) return false;
+        Point that = (Point) obj;
+        return MathUtilities.doubleEquals(this._x, that._x) &&
+        	   MathUtilities.doubleEquals(this._y, that._y);
+        
 	}
 }

@@ -28,12 +28,15 @@ public class PointDatabase
     
 	public PointDatabase()
 	{
-        // TODO
+		getPoints();
 	}
 
 	public PointDatabase(List<Point> points)
 	{
-        // TODO
+		PointDatabase pd = new PointDatabase();
+		for (Point p: points) {
+			pd.put(p.getName(), p.getX(), p.getY());
+		}
 	}
 
 	public int size() { return _factory.size(); }
@@ -43,7 +46,7 @@ public class PointDatabase
 	 */
 	public void put(String name, double x, double y)
 	{
-        // TODO
+        _factory.put(name, x, y);
 	}
 
 	/**
