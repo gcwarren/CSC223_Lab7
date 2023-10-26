@@ -1,4 +1,4 @@
-package visitor;
+package input.visitor;
 
 import org.json.*;
 import input.components.FigureNode;

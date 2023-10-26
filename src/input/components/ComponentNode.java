@@ -1,5 +1,5 @@
 package input.components;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 public interface ComponentNode
 {

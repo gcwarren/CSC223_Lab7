@@ -2,7 +2,7 @@ package input.components.segments;
 
 import input.components.ComponentNode;
 import input.components.point.PointNode;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 //import input.components.point.PointNode;
 //import utilities.math.MathUtilities;

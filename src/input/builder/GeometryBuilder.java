@@ -1,4 +1,4 @@
-package builder;
+package input.builder;
 
 import java.util.List;
 import input.components.FigureNode;

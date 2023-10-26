@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import input.components.ComponentNode;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 //import utilities.math.MathUtilities;
 

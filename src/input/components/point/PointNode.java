@@ -2,7 +2,7 @@ package input.components.point;
 
 import input.components.ComponentNode;
 import utilities.math.MathUtilities;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 /**
  * A 2D Point (x, y).

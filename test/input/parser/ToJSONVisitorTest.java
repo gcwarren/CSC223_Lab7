@@ -5,15 +5,15 @@
 
 package input.parser;
 
-import builder.DefaultBuilder;
-import builder.GeometryBuilder;
+import input.builder.DefaultBuilder;
+import input.builder.GeometryBuilder;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.AbstractMap;
 import org.junit.jupiter.api.Test;
 import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.exception.ParseException;
-import visitor.ToJSONVisitor;
+import input.visitor.ToJSONVisitor;
 
 public class ToJSONVisitorTest {
 

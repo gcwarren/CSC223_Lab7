@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 import input.components.ComponentNode;
 import input.components.point.PointNode;
-import visitor.ComponentNodeVisitor;
+import input.visitor.ComponentNodeVisitor;
 
 import java.util.Set;
 
