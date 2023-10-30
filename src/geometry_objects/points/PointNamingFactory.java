@@ -201,6 +201,10 @@ public class PointNamingFactory
 
 	@Override
 	public String toString() {
-        // TODO
+		String output = "";
+        for (Point p: _database.keySet()) {
+        	output += String.format("%4s, %4d, %4d", p.getName() + p.getX() + p.getY() + "\n");
+        }
+        return output;
 	}
 }
