@@ -29,7 +29,7 @@ public class PointDatabase
     public Set<Point> getPoints() { return _factory.getAllPoints(); }
     
 	public PointDatabase() {
-		getPoints(); //TODO: we're confused smh 
+		_factory = new PointNamingFactory();
 	}
 
 	public PointDatabase(List<Point> points) {

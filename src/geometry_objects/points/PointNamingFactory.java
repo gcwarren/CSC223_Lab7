@@ -1,9 +1,15 @@
 package geometry_objects.points;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+
+import utilities.math.MathUtilities;
 
 /*
  * Given a pair of coordinates; generate a unique name for it;
@@ -37,7 +43,7 @@ public class PointNamingFactory
 	protected Map<Point, Point> _database;
 
 	public PointNamingFactory() {
-		new PointDatabase(); //TODO: i am confused
+		_database = new LinkedHashMap<Point, Point>();
 	}
 
 	/**
@@ -68,7 +74,8 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database
 	 */
 	public Point put(Point pt) {
-		
+		_database.put(pt, null);
+		return pt;
 	}
 
 	/**
@@ -82,7 +89,9 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database (with generated name)
 	 */
 	public Point put(double x, double y) {
-		// TODO
+		Point newPoint = new Point(getCurrentName(), x, y);
+		_database.put(newPoint, null);
+		return newPoint;
 	}
 
 	/**
@@ -104,7 +113,12 @@ public class PointNamingFactory
 	 *         The exception is that a valid name can overwrite an unnamed point.
 	 */
 	public Point put(String name, double x, double y) {
-		// TODO
+		Point newPoint = new Point(name, x, y);
+		if (_database.containsKey(new Point(x, y)) || _database.containsValue(new Point(x, y))) {
+			//return;
+		}
+		_database.put(newPoint, null);
+		return newPoint;
 	}    
 
 	/**
@@ -115,10 +129,20 @@ public class PointNamingFactory
 	 * @return stored database Object corresponding to (x, y) 
 	 */
 	public Point get(double x, double y) {
-		// TODO
+		for (Point p: _database.values()) {
+			if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
+				return p;
+			}
+		}
+		return null;
 	}	
 	public Point get(Point pt) {
-		// TODO
+		for (Point p: _database.values()) {
+			if (p._name.equals(pt._name) & MathUtilities.doubleEquals(p._x, pt._x) & MathUtilities.doubleEquals(p._y, pt._y)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -126,8 +150,8 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 	 * @return simple containment; no updating
 	 */
-	public boolean contains(double x, double y) { /* TODO */ }
-	public boolean contains(Point p) { /* TODO */ }
+	public boolean contains(double x, double y) { return (_database.containsValue(new Point(x, y)) || _database.containsKey(new Point(x, y))); }
+	public boolean contains(Point p) { return (_database.containsValue(p) || _database.containsKey(p)); }
 
 	/**
 	 * Constructs the next (complete with prefix) generated name.
@@ -139,7 +163,9 @@ public class PointNamingFactory
 	 * @return the next complete name in the sequence including prefix.
 	 */
 	private String getCurrentName() {
-        // TODO
+        updateName();
+        _currentName = _PREFIX + _currentName;
+        return _currentName;
 	}
 
 	/**
@@ -147,14 +173,33 @@ public class PointNamingFactory
 	 * 'A' -> 'B' -> 'C' -> 'Z' --> 'AA' -> 'BB'
 	 */
 	private void updateName() {
-        // TODO
+		if (_currentName.charAt(_numLetters-1) != END_LETTER) {
+			_currentName = _currentName.substring(0, _numLetters-2) + _currentName.charAt(_numLetters-1).
+		}
+		if (_currentName.charAt(_numLetters) == END_LETTER) {
+			if (_currentName.charAt(_numLetters - 1) == END_LETTER) {
+				
+			}
+			_currentName = _currentName.substring(0, _currentName.length() - 2) + START_LETTER;
+			_numLetters += 1;
+		}
+        if ((_numLetters == 1) & (_currentName.equals("Z"))) {
+        	_currentName = START_LETTER + START_LETTER;
+        }
 	}
 
 	/**
 	 * @return The entire database of points.
 	 */
 	public  Set<Point> getAllPoints() {
-        // TODO
+		Set<Point> allPoints = new Set<Point>();
+		for (Point entryPoint: _database.keySet()) {
+			allPoints.add(entryPoint);
+		}
+		for (Point connectingPoint: _database.values()) {
+			allPoints.add(connectingPoint);
+		}
+		return allPoints;
 	}
 
 	public void clear() { _database.clear(); }
