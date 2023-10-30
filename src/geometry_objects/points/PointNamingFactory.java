@@ -174,7 +174,7 @@ public class PointNamingFactory
 	 */
 	private void updateName() {
 		if (_currentName.charAt(_numLetters-1) != END_LETTER) {
-			_currentName = _currentName.substring(0, _numLetters-2) + _currentName.charAt(_numLetters-1).
+			_currentName = _currentName.substring(0, _numLetters-2) + _currentName.charAt(_numLetters-1);
 		}
 		if (_currentName.charAt(_numLetters) == END_LETTER) {
 			if (_currentName.charAt(_numLetters - 1) == END_LETTER) {
