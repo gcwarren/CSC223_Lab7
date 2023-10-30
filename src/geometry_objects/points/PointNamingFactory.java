@@ -36,9 +36,8 @@ public class PointNamingFactory
 	//
 	protected Map<Point, Point> _database;
 
-	public PointNamingFactory()
-	{
-		// TODO
+	public PointNamingFactory() {
+		new PointDatabase(); //TODO: i am confused
 	}
 
 	/**
@@ -46,9 +45,17 @@ public class PointNamingFactory
 	 *
 	 * @param points -- a list of points, named or not named
 	 */
-	public PointNamingFactory(List<Point> points)
-	{
-		// TODO
+	public PointNamingFactory(List<Point> points) {
+		PointNamingFactory pnf = new PointNamingFactory();
+		for (Point p: points) {
+			if (p._name != null) {
+				pnf.put(p._name, p._x, p._y);
+			}
+			else {
+				pnf.put(getCurrentName(), p._x, p._y);
+				updateName();
+			}
+		}
 	}
 
 	/**
@@ -60,9 +67,8 @@ public class PointNamingFactory
                     * the object in the database if it already exists or
 					* a completely new point that has been added to the database
 	 */
-	public Point put(Point pt)
-	{
-		// TODO
+	public Point put(Point pt) {
+		
 	}
 
 	/**
@@ -75,8 +81,7 @@ public class PointNamingFactory
                     * the object in the database if it already exists or
 					* a completely new point that has been added to the database (with generated name)
 	 */
-	public Point put(double x, double y)
-	{
+	public Point put(double x, double y) {
 		// TODO
 	}
 
@@ -98,8 +103,7 @@ public class PointNamingFactory
 	 *         
 	 *         The exception is that a valid name can overwrite an unnamed point.
 	 */
-	public Point put(String name, double x, double y)
-	{
+	public Point put(String name, double x, double y) {
 		// TODO
 	}    
 
@@ -110,12 +114,10 @@ public class PointNamingFactory
 	 * @param y
 	 * @return stored database Object corresponding to (x, y) 
 	 */
-	public Point get(double x, double y)
-	{
+	public Point get(double x, double y) {
 		// TODO
 	}	
-	public Point get(Point pt)
-	{
+	public Point get(Point pt) {
 		// TODO
 	}
 
@@ -136,8 +138,7 @@ public class PointNamingFactory
      *	 
 	 * @return the next complete name in the sequence including prefix.
 	 */
-	private String getCurrentName()
-	{
+	private String getCurrentName() {
         // TODO
 	}
 
@@ -145,16 +146,14 @@ public class PointNamingFactory
 	 * Advances the current generated name to the next letter in the alphabet:
 	 * 'A' -> 'B' -> 'C' -> 'Z' --> 'AA' -> 'BB'
 	 */
-	private void updateName()
-	{
+	private void updateName() {
         // TODO
 	}
 
 	/**
 	 * @return The entire database of points.
 	 */
-	public  Set<Point> getAllPoints()
-	{
+	public  Set<Point> getAllPoints() {
         // TODO
 	}
 
@@ -162,8 +161,7 @@ public class PointNamingFactory
 	public int size() { return _database.size(); }
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
         // TODO
 	}
 }

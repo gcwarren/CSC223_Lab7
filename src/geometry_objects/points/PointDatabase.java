@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import utilities.math.MathUtilities;
+
 /**
  * This class represents a bi-directional database of points.
  * 
@@ -26,13 +28,11 @@ public class PointDatabase
 
     public Set<Point> getPoints() { return _factory.getAllPoints(); }
     
-	public PointDatabase()
-	{
-		getPoints();
+	public PointDatabase() {
+		getPoints(); //TODO: we're confused smh 
 	}
 
-	public PointDatabase(List<Point> points)
-	{
+	public PointDatabase(List<Point> points) {
 		PointDatabase pd = new PointDatabase();
 		for (Point p: points) {
 			pd.put(p.getName(), p.getX(), p.getY());
@@ -44,8 +44,7 @@ public class PointDatabase
 	/**
 	 * Add a point to the database.
 	 */
-	public void put(String name, double x, double y)
-	{
+	public void put(String name, double x, double y) {
         _factory.put(name, x, y);
 	}
 
@@ -55,13 +54,16 @@ public class PointDatabase
 	 * @param x,y -- doubles defining a point (x,y)
 	 * @return a string corresponding to that point, if it is named.
 	 */
-	public String getName(double x, double y)
-	{
-        // TODO
+	public String getName(double x, double y) {
+        for (Point p: _factory.getAllPoints()) {
+        	if (utilities.math.MathUtilities.doubleEquals(p._x, x) & utilities.math.MathUtilities.doubleEquals(p._y, y)) {
+        		return p.getName();
+        	}
+        }
+        return null;
 	}
-	public String getName(Point pt)
-	{
-        // TODO
+	public String getName(Point pt) {
+        return pt._name;
 	}
 
 	/**
@@ -70,9 +72,13 @@ public class PointDatabase
 	 * @param name -- a String name
 	 * @return a Point object containing (x,y) corresponding to name, if it has been defined.
 	 */
-	public Point getPoint(String name)
-	{
-        // TODO
+	public Point getPoint(String name) {
+        for (Point p: _factory.getAllPoints()) {
+        	if (p._name.equals(name)) {
+        		return p;
+        	}
+        }
+        return null;
 	}
 
 	/**
@@ -82,9 +88,8 @@ public class PointDatabase
 	 * @param pt -- a basic point
 	 * @return the database entry for the point
 	 */
-	public Point getPoint(Point pt)
-	{
-        // TODO
+	public Point getPoint(Point pt) {
+        return pt;
 	}
 
 	/**
@@ -93,8 +98,12 @@ public class PointDatabase
 	 * @param x,y -- doubles defining a point (x,y)
 	 * @return the database entry for the point
 	 */
-	public Point getPoint(double x, double y)
-	{
-        // TODO
+	public Point getPoint(double x, double y) {
+        for (Point p: _factory.getAllPoints()) {
+        	if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
+        		return p;
+        	}
+        }
+        return null;
 	}
 }
