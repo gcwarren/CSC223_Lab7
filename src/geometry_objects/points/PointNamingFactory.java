@@ -174,19 +174,19 @@ public class PointNamingFactory
 	 * 'A' -> 'B' -> 'C' -> 'Z' --> 'AA' -> 'BB'
 	 */
 	private void updateName() {
-		if (_currentName.charAt(_numLetters-1) != END_LETTER) {
-			_currentName = _currentName.substring(0, _numLetters-2) + _currentName.charAt(_numLetters-1);
-		}
-		if (_currentName.charAt(_numLetters) == END_LETTER) {
-			if (_currentName.charAt(_numLetters - 1) == END_LETTER) {
-				//then do what 
+		int count = 1;
+		if (_currentName.charAt(_numLetters - count) == END_LETTER) {
+			while (_currentName.charAt(_numLetters - count) != END_LETTER && count != 0) {
+				count += 1;
 			}
-			_currentName = _currentName.substring(0, _currentName.length() - 2) + START_LETTER;
-			_numLetters += 1;
+			_currentName = (String) _currentName.subSequence(0, count);
+			while (count > 0) {
+				_currentName += "A";
+			}
 		}
-        if ((_numLetters == 1) & (_currentName.equals("Z"))) {
-        	_currentName = START_LETTER + START_LETTER;
-        }
+		else {
+			_currentName += 1;
+		}
 	}
 
 	/**

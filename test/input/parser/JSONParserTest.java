@@ -17,6 +17,7 @@ import input.visitor.UnparseVisitor;
 
 class JSONParserTest {
 	
+	
 	public static ComponentNode runFigureParseTestDefault(String filename)
 	{
 		JSONParser parser = new JSONParser(new DefaultBuilder()); //was geometry builder -> do one for each builder for each file 
@@ -55,6 +56,7 @@ class JSONParserTest {
 		ComponentNode node = JSONParserTest.runFigureParseTestDefault("single_triangle.json");
 
 		assertNull(node);
+		
 	}
 	
 	@Test
