@@ -52,13 +52,14 @@ public class PointNamingFactory
 	 * @param points -- a list of points, named or not named
 	 */
 	public PointNamingFactory(List<Point> points) {
-		PointNamingFactory pnf = new PointNamingFactory();
 		for (Point p: points) {
 			if (p._name != null) {
-				pnf.put(p._name, p._x, p._y);
+				_database.putIfAbsent(p, p);
+//				put(p, p); //Should we check name manually? Look at putIfAbsent API
 			}
 			else {
-				pnf.put(getCurrentName(), p._x, p._y);
+				Point newPoint = new Point(getCurrentName(), p.getX(), p.getY());
+				_database.putIfAbsent(newPoint, newPoint);
 				updateName();
 			}
 		}

@@ -1,9 +1,7 @@
 package geometry_objects.points;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import utilities.math.MathUtilities;
 
 /**
@@ -56,7 +54,7 @@ public class PointDatabase
 	 */
 	public String getName(double x, double y) {
         for (Point p: _factory.getAllPoints()) {
-        	if (utilities.math.MathUtilities.doubleEquals(p._x, x) & utilities.math.MathUtilities.doubleEquals(p._y, y)) {
+        	if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
         		return p.getName();
         	}
         }
