@@ -150,8 +150,12 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 	 * @return simple containment; no updating
 	 */
-	public boolean contains(double x, double y) { return (_database.containsValue(new Point(x, y)) || _database.containsKey(new Point(x, y))); }
-	public boolean contains(Point p) { return (_database.containsValue(p) || _database.containsKey(p)); }
+	public boolean contains(double x, double y) { 
+		return (_database.containsValue(new Point(x, y)) || _database.containsKey(new Point(x, y))); 
+	}
+	public boolean contains(Point p) { 
+		return (_database.containsValue(p) || _database.containsKey(p));
+	}
 
 	/**
 	 * Constructs the next (complete with prefix) generated name.
@@ -164,8 +168,7 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName() {
         updateName();
-        _currentName = _PREFIX + _currentName;
-        return _currentName;
+        return _currentName = _PREFIX + _currentName;
 	}
 
 	/**
@@ -178,7 +181,7 @@ public class PointNamingFactory
 		}
 		if (_currentName.charAt(_numLetters) == END_LETTER) {
 			if (_currentName.charAt(_numLetters - 1) == END_LETTER) {
-				
+				//then do what 
 			}
 			_currentName = _currentName.substring(0, _currentName.length() - 2) + START_LETTER;
 			_numLetters += 1;
