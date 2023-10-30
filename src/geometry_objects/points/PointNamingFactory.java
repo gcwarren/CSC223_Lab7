@@ -75,7 +75,7 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database
 	 */
 	public Point put(Point pt) {
-		_database.put(pt, null);
+		_database.put(pt, pt);
 		return pt;
 	}
 
@@ -91,7 +91,7 @@ public class PointNamingFactory
 	 */
 	public Point put(double x, double y) {
 		Point newPoint = new Point(getCurrentName(), x, y);
-		_database.put(newPoint, null);
+		_database.put(newPoint, newPoint);
 		return newPoint;
 	}
 
@@ -115,10 +115,7 @@ public class PointNamingFactory
 	 */
 	public Point put(String name, double x, double y) {
 		Point newPoint = new Point(name, x, y);
-		if (_database.containsKey(new Point(x, y)) || _database.containsValue(new Point(x, y))) {
-			//return;
-		}
-		_database.put(newPoint, null);
+		_database.putIfAbsent(newPoint, newPoint);
 		return newPoint;
 	}    
 
@@ -129,7 +126,7 @@ public class PointNamingFactory
 	 * @param y
 	 * @return stored database Object corresponding to (x, y) 
 	 */
-	public Point get(double x, double y) {
+	public Point get(double x, double y) {		
 		for (Point p: _database.values()) {
 			if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
 				return p;
@@ -152,10 +149,10 @@ public class PointNamingFactory
 	 * @return simple containment; no updating
 	 */
 	public boolean contains(double x, double y) { 
-		return (_database.containsValue(new Point(x, y)) || _database.containsKey(new Point(x, y))); 
+		return (_database.containsValue(new Point(x, y))); 
 	}
 	public boolean contains(Point p) { 
-		return (_database.containsValue(p) || _database.containsKey(p));
+		return (_database.containsValue(p));
 	}
 
 	/**
@@ -196,14 +193,7 @@ public class PointNamingFactory
 	 * @return The entire database of points.
 	 */
 	public  Set<Point> getAllPoints() {
-		Set<Point> allPoints = new Set<Point>();
-		for (Point entryPoint: _database.keySet()) {
-			allPoints.add(entryPoint);
-		}
-		for (Point connectingPoint: _database.values()) {
-			allPoints.add(connectingPoint);
-		}
-		return allPoints;
+		return _database.keySet();
 	}
 
 	public void clear() { _database.clear(); }
