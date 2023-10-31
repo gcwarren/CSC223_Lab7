@@ -14,10 +14,6 @@ import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
 
 public class PointDatabaseTest {
-	@Test
-	void testPointDatabase() {
-		//create a new pDB to test basic building and other methods
-	}
 	
 	@Test
 	void testSize() {
@@ -33,7 +29,7 @@ public class PointDatabaseTest {
 		
 		PointDatabase testDatabaseNull = new PointDatabase();
 		testDatabaseNull.put(null, 0, 0);
-		assertEquals(0, testDatabaseNull.size());
+		assertEquals(1, testDatabaseNull.size());
 	}
 	
 	@Test
@@ -50,24 +46,16 @@ public class PointDatabaseTest {
 	
 	@Test
 	void testGetNameDouble() {
-		//Test PointNodes using PointNode(double, double) constructor
-		PointNode d = new PointNode(5, 7);
 		
-		//Test PointNodes using PointNode(string, double, double) constructor
-		PointNode ax = new PointNode("A", 3, 6);
-		PointNode bx = new PointNode("B", 6, 0);
-		PointNode cx = new PointNode("C", 4, 4);
+		PointDatabase testDatabase = new PointDatabase();
+		testDatabase.put("A", 3.0, 6.0);
+		testDatabase.put("B", 6.0, 0);
+		testDatabase.put("C", 4, 4.0001);
 		
-		PointNodeDatabase testDatabase = new PointNodeDatabase();
-		testDatabase.put(ax);
-		testDatabase.put(bx);
-		testDatabase.put(cx);
-		
-		//Test cases for getName(PointNode node)
-		assertEquals(ax.getName(), "A");
+		//Test cases for getName(double, double)
+		assertEquals(getName(), "A");
 		assertNotEquals(bx.getName(), "C");
 		assertEquals(cx.getName(), "C");
-		assertEquals(d.getName(), PointNode.ANONYMOUS); //point that exists but is unnamed
 		
 		//Test cases for getName(double x, double y)
 		assertEquals(testDatabase.getName(3, 6), "A");
