@@ -177,8 +177,8 @@ public class PointNamingFactory
 			_currentName = Character.toString(START_LETTER).repeat(_numLetters) + START_LETTER;
 			_numLetters = _numLetters + 1;
 		}
-		else {
-			_currentCharacter = _currentCharacter + 1;
+		else {			
+			_currentCharacter++;
 			_currentName = Character.toString(_currentCharacter).repeat(_numLetters);
 		}
 		//there is a .repeat() API method for strings 
