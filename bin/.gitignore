@@ -1,4 +1,6 @@
-/utilities/
-/input/
-/geometry_objects/
+/.DS_Store
 /InputFacadeTest.class
+/geometry_objects/
+/global/
+/input/
+/utilities/

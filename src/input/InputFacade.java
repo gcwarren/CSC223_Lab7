@@ -65,7 +65,7 @@ public class InputFacade
 		PointNodeDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
 		SegmentNodeDatabase sndb = fig.getSegments(); //get all segemnts w/ helper methods
 		
-		return new Map.Entry<PointDatabase, Set<Segment>>(convertToPoints(pndb), (convertToSegments(sndb), pndb));
+		return new Map.Entry<PointDatabase, Set<Segment>>(convertToPoints(pndb), convertToSegments(sndb, convertToPoints(pndb)));
 	
 	}
 	//use a convert method 
@@ -84,11 +84,16 @@ public class InputFacade
 		return newPD;
 	}
 	
-	private Set<Segment> convertToSegments(SegmentNodeDatabase sndb, PointDatabase pndb) {
-		for (SegmentNode sn : sndb.asSegmentList()) {
-			new Segment(pndb.getPoint(sn.getPoint1().getName()), pndb.getPoint(sn.getPoint2().getName()));
-			//TODO: this won't account for unnamed nodes?
-			//TODO: what do we add the node to?
+	private Segment convertToSegments(SegmentNodeDatabase sndb, PointDatabase pndb) {
+		PointDatabase newPD = new PointDatabase();
+		List<String> pndbNameList = pndb.getAllNodeNames();
+		for (String name: pndbNameList) {
+			PointNode node = pndb.getNodeByName(name);
+			List<String> edgeList = sndb.edgesAsList(node);
+			for (String segName : edgeList) {
+				new Segment(node, pndb.getNodeByName(segName));
+			}
 		}
+						
 	}
 }
