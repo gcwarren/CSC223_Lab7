@@ -51,15 +51,11 @@ public class PointNamingFactory
 	 */
 	public PointNamingFactory(List<Point> points) {
 		for (Point p: points) {
-			if (p._name != null) {
-				_database.putIfAbsent(p, p);
-//				put(p, p); //Should we check name manually? Look at putIfAbsent API
-			}
-			else {
+			if (!_database.containsKey(new Point(p.getX(), p.getY()))) {
 				Point newPoint = new Point(getCurrentName(), p.getX(), p.getY());
-				_database.putIfAbsent(newPoint, newPoint);
-				updateName();
+				_database.put(newPoint, newPoint);
 			}
+			else _database.put(p, p);
 		}
 	}
 
@@ -73,8 +69,18 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database
 	 */
 	public Point put(Point pt) {
-		_database.put(pt, pt);
-		return pt;
+		if (!_database.containsKey(new Point(pt.getX(), pt.getY()))) {
+			if (_database.get(pt).getName() == null) {
+				Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
+				_database.put(newPoint, newPoint);
+				return pt;
+			}
+			else {
+				_database.put(pt, pt);
+				return pt;
+			}
+		}
+		else return _database.get(new Point(pt.getX(), pt.getY()));
 	}
 
 	/**
@@ -88,9 +94,7 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database (with generated name)
 	 */
 	public Point put(double x, double y) {
-		Point newPoint = new Point(getCurrentName(), x, y);
-		_database.put(newPoint, newPoint);
-		return newPoint;
+		return put(new Point(x, y));
 	}
 
 	/**
@@ -112,9 +116,7 @@ public class PointNamingFactory
 	 *         The exception is that a valid name can overwrite an unnamed point.
 	 */
 	public Point put(String name, double x, double y) {
-		Point newPoint = new Point(name, x, y);
-		_database.putIfAbsent(newPoint, newPoint);
-		return newPoint;
+		return put(new Point(name, x, y));
 	}    
 
 	/**
@@ -126,19 +128,15 @@ public class PointNamingFactory
 	 */
 	public Point get(double x, double y) {		
 		for (Point p: _database.values()) {
-			if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
+			if (p.equals(new Point(x, y))) {
 				return p;
 			}
 		}
 		return null;
 	}	
+	
 	public Point get(Point pt) {
-		for (Point p: _database.values()) {
-			if (p._name.equals(pt._name) & MathUtilities.doubleEquals(p._x, pt._x) & MathUtilities.doubleEquals(p._y, pt._y)) {
-				return p;
-			}
-		}
-		return null;
+		return get(new Point(pt.getX(), pt.getY()));
 	}
 
 	/**
