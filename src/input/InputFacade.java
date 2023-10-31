@@ -84,7 +84,7 @@ public class InputFacade
 		return newPD;
 	}
 	
-	private Segment convertToSegments(SegmentNodeDatabase sndb, PointDatabase pndb) {
+	private Set<Segment> convertToSegments(SegmentNodeDatabase sndb, PointDatabase pndb) {
 		for (SegmentNode sn : sndb.asSegmentList()) {
 			new Segment(pndb.getPoint(sn.getPoint1().getName()), pndb.getPoint(sn.getPoint2().getName()));
 			//TODO: this won't account for unnamed nodes?

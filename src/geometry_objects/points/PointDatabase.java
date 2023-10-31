@@ -87,7 +87,10 @@ public class PointDatabase
 	 * @return the database entry for the point
 	 */
 	public Point getPoint(Point pt) {
-        return pt;
+		for (Point p: _factory.getAllPoints()) {
+        	if (p.equals(pt)) return p;
+        }
+        return null;
 	}
 
 	/**
@@ -97,11 +100,6 @@ public class PointDatabase
 	 * @return the database entry for the point
 	 */
 	public Point getPoint(double x, double y) {
-        for (Point p: _factory.getAllPoints()) {
-        	if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
-        		return p;
-        	}
-        }
-        return null;
+        return getPoint(new Point(x, y));
 	}
 }

@@ -28,7 +28,9 @@ public class PointNamingFactory
 	// "B" and 3 -> "BBB"
 	//
 	private String _currentName = "A";
+	private char _currentCharacter = START_LETTER;
 	private int _numLetters = 1;
+	
 
 	//
 	// A hashed container for the database of points; this requires the Point
@@ -162,7 +164,7 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName() {
         updateName();
-        return _currentName = _PREFIX + _currentName;
+        return _PREFIX + _currentName;
 	}
 
 	/**
@@ -170,19 +172,20 @@ public class PointNamingFactory
 	 * 'A' -> 'B' -> 'C' -> 'Z' --> 'AA' -> 'BB'
 	 */
 	private void updateName() {
-		int count = 1;
-		if (_currentName.charAt(_numLetters - count) == END_LETTER) {
-			while (_currentName.charAt(_numLetters - count) != END_LETTER && count != 0) {
-				count += 1;
-			}
-			_currentName = (String) _currentName.subSequence(0, count);
-			while (count > 0) {
-				_currentName += "A";
-			}
+		if (_currentCharacter == END_LETTER) {
+			_currentCharacter = START_LETTER;
+			_currentName = Character.toString(START_LETTER).repeat(_numLetters) + START_LETTER;
+			_numLetters = _numLetters + 1;
 		}
 		else {
-			_currentName += 1;
+			_currentCharacter = _currentCharacter + 1;
+			_currentName = Character.toString(_currentCharacter).repeat(_numLetters);
 		}
+		//there is a .repeat() API method for strings 
+		//this is how we can build the current name 
+		//if _currentCharacter equals end letter then _currentCharacter = START_LETTER 
+		//first do A-Z, then AA-ZZ, and so forth 
+		//do this adding count when you hit end letter 
 	}
 
 	/**
