@@ -51,14 +51,9 @@ public class PointNamingFactory
 	 */
 	public PointNamingFactory(List<Point> points) {
 		for (Point p: points) {
-			if (p._name != null) {
-				_database.putIfAbsent(p, p);
-//				put(p, p); //Should we check name manually? Look at putIfAbsent API
-			}
-			else {
+			if (!_database.containsKey(new Point(p.getX(), p.getY()))) {
 				Point newPoint = new Point(getCurrentName(), p.getX(), p.getY());
-				_database.putIfAbsent(newPoint, newPoint);
-				updateName();
+				_database.put(newPoint, newPoint);
 			}
 		}
 	}
@@ -73,8 +68,12 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database
 	 */
 	public Point put(Point pt) {
-		_database.put(pt, pt);
-		return pt;
+		if (!_database.containsKey(new Point(pt.getX(), pt.getY()))) {
+			Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
+			_database.put(newPoint, newPoint);
+			return pt;
+		}
+		return null;
 	}
 
 	/**
