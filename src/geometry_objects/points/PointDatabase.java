@@ -54,14 +54,14 @@ public class PointDatabase
 	 */
 	public String getName(double x, double y) {
         for (Point p: _factory.getAllPoints()) {
-        	if (MathUtilities.doubleEquals(p._x, x) & MathUtilities.doubleEquals(p._y, y)) {
+        	if (p.equals(new Point(x, y))) {
         		return p.getName();
         	}
         }
         return null;
 	}
 	public String getName(Point pt) {
-        return pt._name;
+        return getName(pt.getX(), pt.getY());
 	}
 
 	/**
@@ -72,9 +72,7 @@ public class PointDatabase
 	 */
 	public Point getPoint(String name) {
         for (Point p: _factory.getAllPoints()) {
-        	if (p._name.equals(name)) {
-        		return p;
-        	}
+        	if (p.getName().equals(name)) return p;
         }
         return null;
 	}
