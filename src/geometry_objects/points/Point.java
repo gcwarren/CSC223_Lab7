@@ -85,7 +85,7 @@ public class Point implements Comparable<Point>
 		//go by x then y
 		
 		if (p1 == null) return -1; 
-		//if (p2 == null) return 1;
+		if (p2 == null) return 1;
 		return p1.compareTo(p2);
 	}
 
@@ -94,7 +94,7 @@ public class Point implements Comparable<Point>
 	{
 		if (that == null) return 1;
 		
-		return Point.LexicographicOrdering(this, that);
+		return LexicographicOrdering(this, that);
 	}
 	
 	@Override
