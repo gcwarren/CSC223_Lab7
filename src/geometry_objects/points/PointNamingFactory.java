@@ -48,8 +48,9 @@ public class PointNamingFactory
 	 * @param points -- a list of points, named or not named
 	 */
 	public PointNamingFactory(List<Point> points) {
+		_database = new LinkedHashMap<Point, Point>();
 		for (Point p: points) {
-			if (_database.get(p) == null) {
+			if (_database.containsKey(p)) {
 				_database.put(p, p);
 			}
 		}

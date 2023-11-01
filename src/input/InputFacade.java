@@ -68,10 +68,11 @@ public class InputFacade
 		PointDatabase newPD = new PointDatabase();
 		List<String> pndbNameList = pndb.getAllNodeNames();
 		
+		//for each name in the PointNodeDatabase
 		for (String name: pndbNameList) {
+			//getNodeByName(), and create a Point with the same information 
 			PointNode node = pndb.getNodeByName(name);
-			Point newPoint = new Point(node.getName(), node.getX(), node.getY());
-			newPD.put(newPoint.getName(), newPoint.getX(), newPoint.getY()); //REDUNDANT?
+			newPD.put(node.getName(), node.getX(), node.getY());
 		}
 		return newPD;
 	}
@@ -79,9 +80,11 @@ public class InputFacade
 	private static Set<Segment> convertToSegments(SegmentNodeDatabase sndb, PointDatabase pdb) {
 		Set<Segment> segments = new HashSet<Segment>();
 		
+		//for each segment in the SegmentNodeDatabase, create Point objects with the same X and Y values 
 		for (SegmentNode segNode: sndb.asSegmentList()) {
 			Point point1 = new Point(segNode.getPoint1().getX(), segNode.getPoint1().getY());
 			Point point2 = new Point(segNode.getPoint2().getX(), segNode.getPoint2().getY());
+			//if the PointDatabase contains these values, add the segment
 			if (pdb.getPoint(point1) != null && pdb.getPoint(point2) != null) {
 				segments.add(new Segment(point1, point2));
 			}

@@ -48,11 +48,11 @@ public class PointDatabaseTest {
 		testDatabase.put("B", 6.0, 0);
 		testDatabase.put("C", 4, 4.0001);
 		
-		assertEquals(testDatabase.getName(new Point(3.0, 6.0)), "A"); //expected UNNAMED but was A
-		assertNotEquals(testDatabase.getName(new Point(4, 3)), "C"); 
-		assertEquals(testDatabase.getName(new Point(4,4)), null); //expected UNNAMED but was A
-		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
-		assertEquals(d.getName(), Point.ANONYMOUS); //point that exists but is unnamed
+		assertEquals(testDatabase.getName(3.0, 6.0), "A"); 
+		assertNotEquals(testDatabase.getName(4, 3), "C"); 
+		assertEquals(testDatabase.getName(4, 4), null); 
+		assertEquals(testDatabase.getName(0, 0), null); 
+		assertEquals(d.getName(), Point.ANONYMOUS);
 	}
 	
 	@Test
@@ -65,15 +65,12 @@ public class PointDatabaseTest {
 		testDatabase.put("C", 4, 4.0001);
 		
 		//Test cases for getName(Point node)
-		//assertEquals(testDatabase.getName(new Point(3.0,6)), "A"); //expected UNNAMED but was A
+		assertEquals(testDatabase.getName(new Point(3.0,6)), "A"); 
 		assertNotEquals(testDatabase.getName(new Point(6,0.0)), "C");
-		//assertEquals(testDatabase.getName(4,4), "C"); //expected null
-		assertEquals(d.getName(), Point.ANONYMOUS); //point that exists but is unnamed
 		
 		//Test cases for getName(double x, double y)
 		assertEquals(testDatabase.getName(3, 6), "A");
 		assertNotEquals(testDatabase.getName(6, 0), "C");
-		//assertEquals(testDatabase.getName(4, 4), "C"); //expected null
 		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
 	}
 	

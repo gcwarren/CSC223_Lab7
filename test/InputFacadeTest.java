@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -18,15 +19,17 @@ public class InputFacadeTest {
 		Point A = new Point("A", 0, 0);
 		Point B = new Point("B", 1, 1);
 		Point C = new Point("C", 1, 0);
-		List<Point> points = Arrays.asList(A, B, C);
-		PointDatabase trianglePointsDB = new PointDatabase(points);
-		Segment AB = new Segment(A, B);
-		Segment BC = new Segment(B, C);
-		Segment AC = new Segment(A, C);
+		
+		PointDatabase trianglePointsDB = new PointDatabase(Arrays.asList(A, B, C));
+		trianglePointsDB.put("A", 0, 0);
+		trianglePointsDB.put("B", 1, 1);
+		trianglePointsDB.put("C", 1, 0);
+		
 		Set<Segment> triangleSegments = new HashSet<Segment>();
-		triangleSegments.add(AB);
-		triangleSegments.add(BC);
-		triangleSegments.add(AC);
+		triangleSegments.add(new Segment(A, B));
+		triangleSegments.add(new Segment(B, C));
+		triangleSegments.add(new Segment(A, C));
+		
 		Map.Entry<PointDatabase, Set<Segment>> testTriangleMap = new AbstractMap.SimpleEntry<PointDatabase, Set<Segment>>(trianglePointsDB, triangleSegments);
 		return testTriangleMap;
 	}
