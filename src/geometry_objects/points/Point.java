@@ -92,9 +92,16 @@ public class Point implements Comparable<Point>
 	@Override
 	public int compareTo(Point that)
 	{
-		if (that == null) return 1;
+		if (that == null) return -2; 
 		
-		return LexicographicOrdering(this, that);
+		if (this.getX() < that.getX()) return -1;
+		if (this.getX() > that.getX()) return 1;
+		if (MathUtilities.doubleEquals(this.getX(), that.getX())) {
+			if (this.getY() < that.getY()) return -1;
+			if (this.getY() > that.getY()) return 1;
+			if (MathUtilities.doubleEquals(this.getY(), that.getY())) return 0;
+		}
+		return -2;
 	}
 	
 	@Override

@@ -59,12 +59,13 @@ public class PointTest {
 		
 		@Test
 		void testCompareTo() {
-			Point testPointNull = new Point(null, 0, 0);
-			assertEquals(testPointNull.compareTo(null), 1);
-			
-			//STACK OVERFLOW ERRORS BELOW
-			assertEquals(b.compareTo(f), b);
-			assertNotEquals(b.compareTo(d), b);
+			Point testPoint1 = new Point(null, 0, 0);
+			Point testPoint2 = new Point(null, 0, 1);
+			Point testPoint3 = new Point(null, 1, 0);
+			assertEquals(testPoint1.compareTo(null), -2);
+			assertEquals(testPoint1.compareTo(testPoint2), -1);
+			assertEquals(testPoint3.compareTo(testPoint1), 1);
+			assertEquals(testPoint1.compareTo(testPoint1), 0);
 		}
 		
 		@Test
