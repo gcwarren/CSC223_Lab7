@@ -36,8 +36,18 @@ public class PointNamingFactoryTest {
 	
 	//test put(double x, double y) 
 	public void insertionDoubleTest() { 
+		PointNamingFactory PNF = new PointNamingFactory();
+		//point coordinates 
+		double x = 2.0;
+		double y = 3.0;
 		
+		Point addedPoint = PNF.put(x, y); 
+		
+		assertEquals(x, addedPoint.getX(), 0.0001);
+		assertEquals(y, addedPoint.getY(), 0.0001);
 	}
+	
+	
 	
 	
 	
