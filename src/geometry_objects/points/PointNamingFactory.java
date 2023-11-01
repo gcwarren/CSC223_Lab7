@@ -136,7 +136,7 @@ public class PointNamingFactory
 	}	
 	
 	public Point get(Point pt) {
-		return get(new Point(pt.getX(), pt.getY()));
+		return _database.get(new Point(pt.getX(), pt.getY()));
 	}
 
 	/**

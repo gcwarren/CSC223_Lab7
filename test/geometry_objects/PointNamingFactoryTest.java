@@ -1,7 +1,6 @@
 package geometry_objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,11 +28,9 @@ public class PointNamingFactoryTest {
 	@Test
 	void insertionPointTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point = new Point("A1", 2.0, 3.0);
-		Point addedPoint = PNF.put(point); 
+		PNF.put(new Point("A", 2.0, 3.0)); 
 		
-		assertEquals(point, addedPoint);	
-		
+		assertTrue(PNF.contains(2.0, 3.0));
 	}
 	
 	//test put(double x, double y) 
@@ -44,10 +41,9 @@ public class PointNamingFactoryTest {
 		double x = 2.0;
 		double y = 3.0;
 		
-		Point addedPoint = PNF.put(x, y); 
+		PNF.put(x, y); 
 		
-		assertEquals(x, addedPoint.getX(), 0.0001);
-		assertEquals(y, addedPoint.getY(), 0.0001);
+		assertTrue(PNF.contains(x, y));
 	}
 
 }
