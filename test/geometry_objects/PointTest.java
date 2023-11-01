@@ -35,8 +35,12 @@ public class PointTest {
 
 		
 		@Test
-		void testIsUnamed() {
+		void testIsUnnamed() {
+			Point testPointNull = new Point(null, 0, 0);
+			assertTrue(testPointNull.isUnnamed());
 			
+			Point testPoint = new Point("A", 3.0, 6.0);
+			assertFalse(testPoint.isUnnamed());
 		}
 		
 		@Test 
@@ -54,8 +58,8 @@ public class PointTest {
 			Point testPointNull = new Point(null, 0, 0);
 			assertEquals(testPointNull.compareTo(null), 1);
 			
+			//STACK OVERFLOW ERRORS BELOW
 			assertEquals(b.compareTo(f), b);
-			
 			assertNotEquals(b.compareTo(d), b);
 		}
 		
