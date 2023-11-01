@@ -67,6 +67,7 @@ public class InputFacade
 	private static PointDatabase convertToPoints(PointNodeDatabase pndb) {
 		PointDatabase newPD = new PointDatabase();
 		List<String> pndbNameList = pndb.getAllNodeNames();
+		
 		for (String name: pndbNameList) {
 			PointNode node = pndb.getNodeByName(name);
 			Point newPoint = new Point(node.getName(), node.getX(), node.getY());
@@ -81,7 +82,7 @@ public class InputFacade
 		for (SegmentNode segNode: sndb.asSegmentList()) {
 			Point point1 = new Point(segNode.getPoint1().getX(), segNode.getPoint1().getY());
 			Point point2 = new Point(segNode.getPoint2().getX(), segNode.getPoint2().getY());
-			if (pdb.getPoint(point1) != null & pdb.getPoint(point2) != null) {
+			if (pdb.getPoint(point1) != null && pdb.getPoint(point2) != null) {
 				segments.add(new Segment(point1, point2));
 			}
 		}

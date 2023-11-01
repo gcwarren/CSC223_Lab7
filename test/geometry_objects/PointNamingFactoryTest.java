@@ -35,20 +35,13 @@ public class PointNamingFactoryTest {
 	@Test
 	void insertionDoubleTest() { 
 		PointNamingFactory PNF = new PointNamingFactory();
-		//point coordinates 
-		double x1 = 2.0;
-		double x2 = 3.0;
-		double x3 = 4.0;
-		double y1 = 5.0;
-		double y2 = 6.0;
-		double y3 = 7.0;
-		PNF.put(x1, y1); 
-		PNF.put(x2, y2);
-		PNF.put(x3, y3);
+		PNF.put(2.0, 5.0); 
+		PNF.put(3.0, 6.0);
+		PNF.put(4.0, 7.0);
 		
-		assertTrue(PNF.contains(x1, y1));
-		assertTrue(PNF.contains(x2, y2));
-		assertTrue(PNF.contains(x3, y3));
+		assertTrue(PNF.contains(2.0, 5.0));
+		assertTrue(PNF.contains(3.0, 6.0));
+		assertTrue(PNF.contains(4.0, 7.0));
 	}
 	
 	@Test
@@ -69,42 +62,33 @@ public class PointNamingFactoryTest {
 	@Test 
 	void getDoubleTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
-		assertEquals(PNF.get(2.0, 5.0), point1);
-		assertEquals(PNF.get(3.0, 6.0), point2);
-		assertEquals(PNF.get(4.0, 7.0), point3);
+		assertEquals(PNF.get(2.0, 5.0), new Point(2.0, 5.0));
+		assertEquals(PNF.get(3.0, 6.0), new Point(3.0, 6.0));
+		assertEquals(PNF.get(4.0, 7.0), new Point(4.0, 7.0));
 	}
 	
 	@Test 
 	void containsPointTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
-		assertTrue(PNF.contains(point1));
-		assertTrue(PNF.contains(point2));
-		assertTrue(PNF.contains(point3));
+		assertEquals(PNF.get(2.0, 5.0), new Point(2.0, 5.0));
+		assertEquals(PNF.get(3.0, 6.0), new Point(3.0, 6.0));
+		assertEquals(PNF.get(4.0, 7.0), new Point(4.0, 7.0));
 	}
 	
 	@Test 
 	void containsDoubleTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
 		assertTrue(PNF.contains(2.0, 5.0));
 		assertTrue(PNF.contains(3.0, 6.0));
@@ -114,25 +98,58 @@ public class PointNamingFactoryTest {
 	@Test 
 	void getAllPointsTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
 		assertEquals(PNF.getAllPoints().size(), 3);
 	}
 	
 	@Test 
+	void updateNameGetCurrentNameCombinedTest() {
+		PointNamingFactory PNF = new PointNamingFactory();
+		PNF.put(new Point(1.0, 28.0));
+		PNF.put(new Point(2.0, 29.0));
+		PNF.put(new Point(3.0, 30.0));
+		PNF.put(new Point(4.0, 31.0));
+		PNF.put(new Point(5.0, 32.0));
+		PNF.put(new Point(6.0, 33.0));
+		PNF.put(new Point(7.0, 34.0));
+		PNF.put(new Point(8.0, 35.0));
+		PNF.put(new Point(9.0, 36.0));
+		PNF.put(new Point(10.0, 37.0));
+		PNF.put(new Point(11.0, 38.0));
+		PNF.put(new Point(12.0, 39.0));
+		PNF.put(new Point(13.0, 40.0));
+		PNF.put(new Point(14.0, 41.0));
+		PNF.put(new Point(15.0, 42.0));
+		PNF.put(new Point(16.0, 43.0));
+		PNF.put(new Point(17.0, 44.0));
+		PNF.put(new Point(18.0, 45.0));
+		PNF.put(new Point(19.0, 46.0));
+		PNF.put(new Point(20.0, 47.0));
+		PNF.put(new Point(21.0, 48.0));
+		PNF.put(new Point(22.0, 49.0));
+		PNF.put(new Point(23.0, 50.0));
+		PNF.put(new Point(24.0, 51.0));
+		PNF.put(new Point(25.0, 52.0));
+		PNF.put(new Point(26.0, 53.0));
+		PNF.put(new Point(27.0, 54.0));
+		PNF.put(new Point("A", 28.0, 29.0));
+
+		assertEquals(PNF.get(new Point(1.0, 28.0)).getName(), "*_A");
+		assertEquals(PNF.get(new Point(26.0, 53.0)).getName(), "*_Z");
+		assertEquals(PNF.get(new Point(27.0, 54.0)).getName(), "*_AA");
+		assertEquals(PNF.get(new Point(28.0, 29.0)).getName(), "A");
+	}
+	
+	
+	@Test 
 	void clearTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
 		PNF.clear();
 		assertEquals(PNF.size(), 0);
@@ -141,12 +158,9 @@ public class PointNamingFactoryTest {
 	@Test 
 	void sizeTest() {
 		PointNamingFactory PNF = new PointNamingFactory();
-		Point point1 = new Point(2.0, 5.0);
-		Point point2 = new Point(3.0, 6.0);
-		Point point3 = new Point(4.0, 7.0);
-		PNF.put(point1); 
-		PNF.put(point2);
-		PNF.put(point3);
+		PNF.put(new Point(2.0, 5.0)); 
+		PNF.put(new Point(3.0, 6.0));
+		PNF.put(new Point(4.0, 7.0));
 		
 		assertEquals(PNF.size(), 3);
 	}

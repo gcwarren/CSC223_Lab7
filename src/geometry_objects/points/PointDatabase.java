@@ -29,11 +29,7 @@ public class PointDatabase
 	}
 
 	public PointDatabase(List<Point> points) {
-		PointNamingFactory pnf = new PointNamingFactory();
-		for (Point p: points) {
-			pnf.put(p.getName(), p.getX(), p.getY());
-		}
-		_factory = pnf;
+		_factory = new PointNamingFactory(points);
 	}
 
 	public int size() { return _factory.getAllPoints().size(); }
@@ -52,15 +48,12 @@ public class PointDatabase
 	 * @return a string corresponding to that point, if it is named.
 	 */
 	public String getName(double x, double y) {
-        for (Point p: _factory.getAllPoints()) {
-        	if (p.equals(new Point(x, y))) {
-        		return p.getName();
-        	}
-        }
-        return null;
+		if (_factory.get(x, y) != null) return _factory.get(x, y).getName();
+		return null;
 	}
 	public String getName(Point pt) {
-        return getName(pt.getX(), pt.getY());
+		if (_factory.get(pt) != null) return _factory.get(pt).getName();
+		return null;
 	}
 
 	/**
@@ -84,10 +77,7 @@ public class PointDatabase
 	 * @return the database entry for the point
 	 */
 	public Point getPoint(Point pt) {
-		for (Point p: _factory.getAllPoints()) {
-        	if (p.equals(pt)) return p;
-        }
-        return null;
+		return _factory.get(pt);
 	}
 
 	/**

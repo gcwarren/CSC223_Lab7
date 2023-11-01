@@ -49,11 +49,9 @@ public class PointNamingFactory
 	 */
 	public PointNamingFactory(List<Point> points) {
 		for (Point p: points) {
-			if (!_database.containsKey(new Point(p.getX(), p.getY()))) {
-				Point newPoint = new Point(getCurrentName(), p.getX(), p.getY());
-				_database.put(newPoint, newPoint);
+			if (_database.get(p) == null) {
+				_database.put(p, p);
 			}
-			else _database.put(p, p);
 		}
 	}
 
@@ -66,14 +64,23 @@ public class PointNamingFactory
                     * the object in the database if it already exists or
 					* a completely new point that has been added to the database
 	 */
-	public Point put(Point pt) {
-		if (_database.containsKey(new Point(pt.getX(), pt.getY()))) {
-			return _database.get(new Point(pt.getX(), pt.getY()));
-		}
-		if (pt.getName() != null) {
+	public Point put(Point pt) {	
+		//if the given point has a name, 
+		if (!pt.isUnnamed()) {
+			//check if that name already exists in the database. 
+			for (Point p: _database.keySet()) {
+				//if so, use getCurrentName()
+				if (p.getName().equals(pt.getName())) {
+					Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
+					_database.put(newPoint, newPoint);
+					return pt;
+				}
+			}
+			//else, use the given name
 			_database.put(pt, pt);
 			return pt;
 		}
+		//if the given point is unnamed, use getCurrentName()
 		else {
 			Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
 			_database.put(newPoint, newPoint);
@@ -124,13 +131,8 @@ public class PointNamingFactory
 	 * @param y
 	 * @return stored database Object corresponding to (x, y) 
 	 */
-	public Point get(double x, double y) {		
-		for (Point p: _database.values()) {
-			if (p.equals(new Point(x, y))) {
-				return p;
-			}
-		}
-		return null;
+	public Point get(double x, double y) {
+		return _database.get(new Point(x, y));
 	}	
 	
 	public Point get(Point pt) {
@@ -159,8 +161,13 @@ public class PointNamingFactory
 	 * @return the next complete name in the sequence including prefix.
 	 */
 	private String getCurrentName() {
+        String name = _PREFIX + _currentName;
+        for (Point p: getAllPoints()) {
+        	if (name.equals(p.getName())) updateName();
+        }
+        name = _PREFIX + _currentName;
         updateName();
-        return _PREFIX + _currentName;
+        return name;
 	}
 
 	/**

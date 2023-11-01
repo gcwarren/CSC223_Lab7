@@ -28,7 +28,6 @@ public class PointDatabaseTest {
 	
 	@Test
 	void testPut() {
-		
 		PointDatabase testDatabase = new PointDatabase();
 		testDatabase.put("A", 3.0, 6.0);
 		testDatabase.put("B", 2.0, 4.0);
@@ -37,12 +36,11 @@ public class PointDatabaseTest {
 
 		assertEquals(4, testDatabase.size());
 		assertEquals(testDatabase.getName(new Point(3.0, 6.0)), "A"); 
-		assertNotEquals(testDatabase.getName(new Point(2, 6)), "A"); 
+		assertNotEquals(testDatabase.getName(new Point(2.0, 6.0)), "A"); 
 	}
 	
 	@Test
 	void testGetNameDouble() {
-		
 		Point d = new Point(5, 7);
 		
 		PointDatabase testDatabase = new PointDatabase();
@@ -50,7 +48,7 @@ public class PointDatabaseTest {
 		testDatabase.put("B", 6.0, 0);
 		testDatabase.put("C", 4, 4.0001);
 		
-		assertEquals(testDatabase.getName(new Point(3,6)), "A"); //expected UNNAMED but was A
+		assertEquals(testDatabase.getName(new Point(3.0, 6.0)), "A"); //expected UNNAMED but was A
 		assertNotEquals(testDatabase.getName(new Point(4, 3)), "C"); 
 		assertEquals(testDatabase.getName(new Point(4,4)), null); //expected UNNAMED but was A
 		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
