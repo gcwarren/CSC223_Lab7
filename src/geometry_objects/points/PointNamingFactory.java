@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import utilities.math.MathUtilities;
-
 /*
  * Given a pair of coordinates; generate a unique name for it;
  * return that point object.
@@ -69,7 +67,7 @@ public class PointNamingFactory
 					* a completely new point that has been added to the database
 	 */
 	public Point put(Point pt) {
-		if (!_database.containsKey(new Point(pt.getX(), pt.getY()))) {
+		if (_database.containsKey(new Point(pt.getX(), pt.getY()))) {
 			return _database.get(new Point(pt.getX(), pt.getY()));
 		}
 		if (pt.getName() != null) {
@@ -179,11 +177,6 @@ public class PointNamingFactory
 			_currentCharacter++;
 			_currentName = Character.toString(_currentCharacter).repeat(_numLetters);
 		}
-		//there is a .repeat() API method for strings 
-		//this is how we can build the current name 
-		//if _currentCharacter equals end letter then _currentCharacter = START_LETTER 
-		//first do A-Z, then AA-ZZ, and so forth 
-		//do this adding count when you hit end letter 
 	}
 
 	/**

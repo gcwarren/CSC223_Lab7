@@ -2,8 +2,6 @@ package geometry_objects.points;
 
 import java.util.List;
 import java.util.Set;
-import utilities.math.MathUtilities;
-
 /**
  * This class represents a bi-directional database of points.
  * 

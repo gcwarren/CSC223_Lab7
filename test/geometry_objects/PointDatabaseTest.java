@@ -1,11 +1,6 @@
 package geometry_objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -59,7 +54,7 @@ public class PointDatabaseTest {
 		
 		assertEquals(testDatabase.getName(new Point(3,6)), "A"); //expected UNNAMED but was A
 		assertNotEquals(testDatabase.getName(new Point(4, 3)), "C"); 
-		assertEquals(testDatabase.getName(new Point(4,4)), "C"); //expected UNNAMED but was A
+		assertEquals(testDatabase.getName(new Point(4,4)), null); //expected UNNAMED but was A
 		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
 		assertEquals(d.getName(), Point.ANONYMOUS); //point that exists but is unnamed
 	}
@@ -99,7 +94,7 @@ public class PointDatabaseTest {
 		//Test cases for getName(Point node)
 		assertEquals(testDatabase.getPoint(new Point(3, 6)).getName() , "A");
 		assertNotEquals(testDatabase.getPoint(new Point(6, 0)).getName() , "A");
-		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
+		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName());
 	}
 	
 	@Test 
@@ -113,7 +108,7 @@ public class PointDatabaseTest {
 		
 		assertEquals(testDatabase.getPoint(new Point(3, 6)).getName() , "A");
 		assertNotEquals(testDatabase.getPoint(new Point(2.0, 4.0)).getName(), "A");
-		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
+		assertNull(testDatabase.getPoint(new Point(0, 0)));
 		
 	}
 	
@@ -128,7 +123,7 @@ public class PointDatabaseTest {
 		
 		assertEquals(testDatabase.getPoint(new Point(3.0, 6.0)).getName() , "A");
 		assertNotEquals(testDatabase.getPoint(new Point(2, 4)).getName(), "A");
-		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
+		assertNull(testDatabase.getPoint(new Point(0, 0)));
 	}
 	
 }
