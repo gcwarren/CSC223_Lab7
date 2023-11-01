@@ -134,11 +134,20 @@ public class PointNamingFactoryTest {
 		PNF.put(point2);
 		PNF.put(point3);
 		
-		assertNull(PNF.clear());
+		PNF.clear();
+		assertEquals(PNF.size(), 0);
 	}
 	
 	@Test 
 	void sizeTest() {
+		PointNamingFactory PNF = new PointNamingFactory();
+		Point point1 = new Point(2.0, 5.0);
+		Point point2 = new Point(3.0, 6.0);
+		Point point3 = new Point(4.0, 7.0);
+		PNF.put(point1); 
+		PNF.put(point2);
+		PNF.put(point3);
 		
+		assertEquals(PNF.size(), 3);
 	}
 }

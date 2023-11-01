@@ -29,10 +29,11 @@ public class PointDatabase
 	}
 
 	public PointDatabase(List<Point> points) {
-		PointDatabase pd = new PointDatabase();
+		PointNamingFactory pnf = new PointNamingFactory();
 		for (Point p: points) {
-			pd.put(p.getName(), p.getX(), p.getY());
+			pnf.put(p.getName(), p.getX(), p.getY());
 		}
+		_factory = pnf;
 	}
 
 	public int size() { return _factory.getAllPoints().size(); }

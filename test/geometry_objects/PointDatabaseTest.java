@@ -1,9 +1,7 @@
 package geometry_objects;
 
 import static org.junit.Assert.*;
-
 import org.junit.jupiter.api.Test;
-
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
 //import input.components.point.Point;

@@ -1,11 +1,7 @@
 package input;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,7 +10,6 @@ import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
 import geometry_objects.Segment;
 import input.builder.GeometryBuilder;
-import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
@@ -63,14 +58,12 @@ public class InputFacade
 	 */
 	public static Map.Entry<PointDatabase, Set<Segment>> toGeometryRepresentation(FigureNode fig)
 	{
-		// TODO IS MAP SUPPOSE TO CONTAIN INTERABLE COMPOENETS OR DO WE JUST PASS VALUES
 		PointNodeDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
 		SegmentNodeDatabase sndb = fig.getSegments(); //get all segments w/ helper methods
 
 		return new AbstractMap.SimpleEntry<PointDatabase, Set<Segment>>(convertToPoints(pndb), convertToSegments(sndb, convertToPoints(pndb)));
 	}
 
-	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
 	private static PointDatabase convertToPoints(PointNodeDatabase pndb) {
 		PointDatabase newPD = new PointDatabase();
 		List<String> pndbNameList = pndb.getAllNodeNames();

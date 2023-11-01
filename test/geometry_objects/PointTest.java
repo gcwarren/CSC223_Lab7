@@ -1,14 +1,8 @@
 package geometry_objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 import org.junit.jupiter.api.Test;
-
 import geometry_objects.points.Point;
-import geometry_objects.points.PointDatabase;
 
 
 public class PointTest {
