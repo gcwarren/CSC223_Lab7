@@ -1,16 +1,19 @@
 package geometry_objects;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
 import geometry_objects.points.Point;
+import geometry_objects.points.PointDatabase;
 
 
 public class PointTest {
 
-	//Test Points for Point(double, double) constructor
+		//Test Points for Point(double, double) constructor
 		Point a = new Point(3, 6);
 		Point b = new Point(2, 4);
 		Point c = new Point(4.00045, 5.79034);
@@ -48,7 +51,12 @@ public class PointTest {
 		
 		@Test
 		void testCompareTo() {
+			Point testPointNull = new Point(null, 0, 0);
+			assertEquals(testPointNull.compareTo(null), 1);
 			
+			assertEquals(b.compareTo(f), b);
+			
+			assertNotEquals(b.compareTo(d), b);
 		}
 		
 		@Test
