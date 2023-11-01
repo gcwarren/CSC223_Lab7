@@ -37,7 +37,7 @@ public class PointDatabase
 		}
 	}
 
-	public int size() { return _factory.size(); }
+	public int size() { return _factory.getAllPoints().size(); }
 	
 	/**
 	 * Add a point to the database.
