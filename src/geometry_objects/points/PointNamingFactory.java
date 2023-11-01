@@ -70,17 +70,17 @@ public class PointNamingFactory
 	 */
 	public Point put(Point pt) {
 		if (!_database.containsKey(new Point(pt.getX(), pt.getY()))) {
-			if (_database.get(pt).getName() == null) {
-				Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
-				_database.put(newPoint, newPoint);
-				return pt;
-			}
-			else {
-				_database.put(pt, pt);
-				return pt;
-			}
+			return _database.get(new Point(pt.getX(), pt.getY()));
 		}
-		else return _database.get(new Point(pt.getX(), pt.getY()));
+		if (pt.getName() != null) {
+			_database.put(pt, pt);
+			return pt;
+		}
+		else {
+			Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
+			_database.put(newPoint, newPoint);
+			return pt;
+		}
 	}
 
 	/**

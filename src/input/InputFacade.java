@@ -73,7 +73,7 @@ public class InputFacade
 
 	//	
 	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
-	private PointDatabase convertToPoints(PointNodeDatabase pndb) {
+	private static PointDatabase convertToPoints(PointNodeDatabase pndb) {
 		PointDatabase newPD = new PointDatabase();
 		List<String> pndbNameList = pndb.getAllNodeNames();
 		for (String name: pndbNameList) {
@@ -84,7 +84,7 @@ public class InputFacade
 		return newPD;
 	}
 
-	private Set<Segment> convertToSegments(SegmentNodeDatabase sndb, PointDatabase pdb) {
+	private static Set<Segment> convertToSegments(SegmentNodeDatabase sndb, PointDatabase pdb) {
 		Set<Segment> segments = new HashSet<Segment>();
 		
 		for (SegmentNode segNode: sndb.asSegmentList()) {
