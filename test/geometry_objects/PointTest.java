@@ -32,22 +32,22 @@ public class PointTest {
 
 		
 		@Test
-		void isUnamedTest() {
+		void testIsUnamed() {
 			
 		}
 		
 		@Test 
-		void hashCodeTest() {
+		void testHashCode() {
 			
 		}
 		
 		@Test
-		void LexicographicOrderingTest() {
+		void testLexicographicOrdering() {
 			
 		}
 		
 		@Test
-		void compareToTest() {
+		void testCompareTo() {
 			
 		}
 		

@@ -3,6 +3,7 @@ package geometry_objects;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -42,8 +43,8 @@ public class PointDatabaseTest {
 		testDatabase.put("D", 5, 6.9);
 
 		assertEquals(4, testDatabase.size());
-		//assertEquals(testDatabase.getName(new Point(3.0,6.0)), "A"); //expected UNNAMED but was A
-		assertNotEquals(testDatabase.getName(new Point(2,6)), "A"); 
+		assertEquals(testDatabase.getName(new Point(3.0, 6.0)), "A"); 
+		assertNotEquals(testDatabase.getName(new Point(2, 6)), "A"); 
 	}
 	
 	@Test
@@ -56,9 +57,9 @@ public class PointDatabaseTest {
 		testDatabase.put("B", 6.0, 0);
 		testDatabase.put("C", 4, 4.0001);
 		
-		//assertEquals(testDatabase.getName(new Point(3,6)), "A"); //expected UNNAMED but was A
+		assertEquals(testDatabase.getName(new Point(3,6)), "A"); //expected UNNAMED but was A
 		assertNotEquals(testDatabase.getName(new Point(4, 3)), "C"); 
-		//assertEquals(testDatabase.getName(new Point(4,4)), "C"); //expected UNNAMED but was A
+		assertEquals(testDatabase.getName(new Point(4,4)), "C"); //expected UNNAMED but was A
 		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
 		assertEquals(d.getName(), Point.ANONYMOUS); //point that exists but is unnamed
 	}
@@ -85,76 +86,49 @@ public class PointDatabaseTest {
 		assertEquals(testDatabase.getName(0, 0), null); //point that does not exist 
 	}
 	
+	// ALL THE NULL CASES BELOW DO NOT PASS
+	
 	@Test 
 	void testGetPointString() {
-		//Test Points using Point(string, double, double) constructor
-		Point ax = new Point("A", 3, 6);
-		Point bx = new Point("B", 6, 0);
-		Point cx = new Point("C", 4, 4);
-		Point dx = new Point("D", 0, 0);
-		
+
 		PointDatabase testDatabase = new PointDatabase();
 		testDatabase.put("A", 3.0, 6.0);
 		testDatabase.put("B", 6.0, 0);
-		testDatabase.put("C", 4, 4.0001);
+		testDatabase.put(null, 0, 0);
 		
 		//Test cases for getName(Point node)
-		assertEquals(testDatabase.getPoint(ax).toString(), "A(3, 6)");
-		assertNotEquals(testDatabase.getPoint(bx).toString(), "A(6, 0)");
-		assertEquals(testDatabase.getPoint(cx).toString(), "C(4, 4)");
-		assertEquals(testDatabase.getPoint(dx), null);
+		assertEquals(testDatabase.getPoint(new Point(3, 6)).getName() , "A");
+		assertNotEquals(testDatabase.getPoint(new Point(6, 0)).getName() , "A");
+		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
 	}
 	
 	@Test 
 	void testGetPointPoint() {
-		//Test Points using Point(string, double, double) constructor
-		Point ax = new Point("A", 3, 6);
-		Point bx = new Point("B", 6, 0);
-		Point cx = new Point("C", 4, 4);
-		Point dx = new Point("D", 0, 0);
 		
 		PointDatabase testDatabase = new PointDatabase();
-		testDatabase.put(ax);
-		testDatabase.put(bx);
-		testDatabase.put(cx);
+		testDatabase.put("A", 3.0, 6.0);
+		testDatabase.put("B", 2.0, 4.0);
+		testDatabase.put("C", 4.1, 4.2);
+		testDatabase.put("D", 5, 6.9);
 		
-		//Test cases for getName(Point node)
-		assertEquals(testDatabase.getPoint(ax).toString(), "A(3, 6)");
-		assertNotEquals(testDatabase.getPoint(bx).toString(), "A(6, 0)");
-		assertEquals(testDatabase.getPoint(cx).toString(), "C(4, 4)");
-		assertEquals(testDatabase.getPoint(dx), null);
+		assertEquals(testDatabase.getPoint(new Point(3, 6)).getName() , "A");
+		assertNotEquals(testDatabase.getPoint(new Point(2.0, 4.0)).getName(), "A");
+		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
 		
-		//Test cases for getName(double x, double y)
-		assertEquals(testDatabase.getPoint(3, 6).toString(), "A(3, 6)");
-		assertNotEquals(testDatabase.getPoint(6, 0).toString(), "A(6, 0)");
-		assertEquals(testDatabase.getPoint(4, 4).toString(), "C(4, 4)");
-		assertNull(testDatabase.getPoint(0, 0));
 	}
 	
 	@Test 
 	void testGetPointDouble() {
-		//Test Points using Point(string, double, double) constructor
-		Point ax = new Point("A", 3, 6);
-		Point bx = new Point("B", 6, 0);
-		Point cx = new Point("C", 4, 4);
-		Point dx = new Point("D", 0, 0);
 		
 		PointDatabase testDatabase = new PointDatabase();
-		testDatabase.put(ax);
-		testDatabase.put(bx);
-		testDatabase.put(cx);
+		testDatabase.put("A", 3.0, 6.0);
+		testDatabase.put("B", 2.0, 4.0);
+		testDatabase.put("C", 4.1, 4.2);
+		testDatabase.put("D", 5, 6.9);
 		
-		//Test cases for getName(Point node)
-		assertEquals(testDatabase.getPoint(ax).toString(), "A(3, 6)");
-		assertNotEquals(testDatabase.getPoint(bx).toString(), "A(6, 0)");
-		assertEquals(testDatabase.getPoint(cx).toString(), "C(4, 4)");
-		assertEquals(testDatabase.getPoint(dx), null);
-		
-		//Test cases for getName(double x, double y)
-		assertEquals(testDatabase.getPoint(3, 6).toString(), "A(3, 6)");
-		assertNotEquals(testDatabase.getPoint(6, 0).toString(), "A(6, 0)");
-		assertEquals(testDatabase.getPoint(4, 4).toString(), "C(4, 4)");
-		assertNull(testDatabase.getPoint(0, 0));
+		assertEquals(testDatabase.getPoint(new Point(3.0, 6.0)).getName() , "A");
+		assertNotEquals(testDatabase.getPoint(new Point(2, 4)).getName(), "A");
+		assertNotNull(testDatabase.getPoint(new Point(0, 0)).getName(), null);
 	}
 	
 }
