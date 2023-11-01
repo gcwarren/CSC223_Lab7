@@ -65,13 +65,11 @@ public class InputFacade
 	{
 		// TODO IS MAP SUPPOSE TO CONTAIN INTERABLE COMPOENETS OR DO WE JUST PASS VALUES
 		PointNodeDatabase pndb = fig.getPointsDatabase();//convert from pointNodeDB to pointdatabase
-		SegmentNodeDatabase sndb = fig.getSegments(); //get all segemnts w/ helper methods
+		SegmentNodeDatabase sndb = fig.getSegments(); //get all segments w/ helper methods
 
 		return new AbstractMap.SimpleEntry<PointDatabase, Set<Segment>>(convertToPoints(pndb), convertToSegments(sndb, convertToPoints(pndb)));
 	}
-	//use a convert method 
 
-	//	
 	// TODO: implement other support methods to facilitate the toGeometryRepresentation method
 	private static PointDatabase convertToPoints(PointNodeDatabase pndb) {
 		PointDatabase newPD = new PointDatabase();
