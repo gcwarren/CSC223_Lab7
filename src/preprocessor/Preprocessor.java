@@ -67,6 +67,7 @@ public class Preprocessor
 		//
 		// Implicit Segments attributed to implicit points
 		//
+		//Note to self: IMPLIED minimal segments
 		_implicitSegments = computeImplicitBaseSegments(_implicitPoints);
 
 		//
@@ -74,11 +75,13 @@ public class Preprocessor
 		//     *givenSegments may not be minimal
 		//     * implicitSegmen
 		//
+		//Note to self: ALL minimal segments 
 		_allMinimalSegments = identifyAllMinimalSegments(_implicitPoints, _givenSegments, _implicitSegments);
 
 		//
 		// Construct all segments inductively from the base segments
 		//
+		//Note to self: ALL NON minimal segments
 		_nonMinimalSegments = constructAllNonMinimalSegments(_allMinimalSegments);
 
 		//
@@ -86,5 +89,19 @@ public class Preprocessor
 		//
 		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
+	}
+	
+	public Set<Segment> computeImplicitBaseSegments(List<Point> implicitPoints) {
+		
+		
+		
+	}
+	
+	public Set<Segment> identifyAllMinimalSegments(List<Point> implicitPoints, List<Point> givenSegments) {
+		
+	}
+	
+	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
+		
 	}
 }
