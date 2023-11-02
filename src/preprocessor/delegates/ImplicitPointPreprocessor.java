@@ -32,14 +32,13 @@ public class ImplicitPointPreprocessor
 		Set<Point> implicitPoints = new LinkedHashSet<Point>();
 		
 		Map<Segment, Set<Segment>> segmentPermutations = findSegmentPermutations(givenSegments);
-		PointDatabase pd = new PointDatabase();
 		
 		for (Segment keySeg: segmentPermutations.keySet()) {
 			for (Segment valueSeg : segmentPermutations.get(keySeg)) {
 				if (getValidImplicitPoint(keySeg, valueSeg) != null) {
-					Point implict = getValidImplicitPoint(keySeg, valueSeg);
-					implicitPoints.add(implict);
-					pd.getPoint(implict.getX(), implict.getY());
+					Point implicit = getValidImplicitPoint(keySeg, valueSeg);
+					implicitPoints.add(implicit);
+					givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());
 				}
 			}
 		}
