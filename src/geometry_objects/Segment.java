@@ -72,6 +72,7 @@ public class Segment extends GeometricObject
 	public boolean HasSubSegment(Segment candidate)
 	{
         // TODO
+		
 	}
 
 	/**

@@ -93,6 +93,8 @@ public class Preprocessor
 	
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 		
+		_implicitSegments = new HashSet<Segment>();
+		
 		for (Point implicit : implicitPoints) {
 			for (Segment seg : _givenSegments) {
 				if (seg.pointLiesBetweenEndpoints(implicit)) {
@@ -106,6 +108,7 @@ public class Preprocessor
 	
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
 		
+		_allMinimalSegments = new HashSet<Segment>();
 		_allMinimalSegments.addAll(implicitSegments);
 		
 		for (Segment seg : givenSegments) {
@@ -123,6 +126,8 @@ public class Preprocessor
 	}
 	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
+		
+		_nonMinimalSegments =new HashSet<Segment>();
 		
 		for (Segment seg : _givenSegments) {
 			if (!minimalSegments.contains(seg)) {
