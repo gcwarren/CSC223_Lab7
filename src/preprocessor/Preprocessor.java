@@ -109,15 +109,26 @@ public class Preprocessor
 		_allMinimalSegments.addAll(implicitSegments);
 		
 		for (Segment seg : givenSegments) {
+			boolean passesAllSegs = true;
 			for (Point pt : _pointDatabase.getPoints()) {
 				if (seg.pointLiesBetweenEndpoints(pt)) {
-					
+					passesAllSegs = false;
 				}
 			}
+			if (passesAllSegs) {
+				_allMinimalSegments.add(seg);
+			}
 		}
+		return _allMinimalSegments;
 	}
 	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 		
+		for (Segment seg : _givenSegments) {
+			if (!minimalSegments.contains(seg)) {
+				_nonMinimalSegments.add(seg);
+			}
+		}
+		return _nonMinimalSegments;
 	}
 }
