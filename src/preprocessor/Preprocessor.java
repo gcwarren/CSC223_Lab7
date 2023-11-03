@@ -104,8 +104,17 @@ public class Preprocessor
 		return _implicitSegments;
 	}
 	
-	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments) {
+	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
 		
+		_allMinimalSegments.addAll(implicitSegments);
+		
+		for (Segment seg : givenSegments) {
+			for (Point pt : _pointDatabase.getPoints()) {
+				if (seg.pointLiesBetweenEndpoints(pt)) {
+					
+				}
+			}
+		}
 	}
 	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
