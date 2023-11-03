@@ -91,13 +91,20 @@ public class Preprocessor
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
 	
-	public Set<Segment> computeImplicitBaseSegments(List<Point> implicitPoints) {
+	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 		
-		
-		
+		for (Point implicit : implicitPoints) {
+			for (Segment seg : _givenSegments) {
+				if (seg.pointLiesBetweenEndpoints(implicit)) {
+					_implicitSegments.add(new Segment(implicit, seg.getPoint1()));
+					_implicitSegments.add(new Segment(implicit, seg.getPoint2()));
+				}
+			}
+		}
+		return _implicitSegments;
 	}
 	
-	public Set<Segment> identifyAllMinimalSegments(List<Point> implicitPoints, List<Point> givenSegments) {
+	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments) {
 		
 	}
 	
