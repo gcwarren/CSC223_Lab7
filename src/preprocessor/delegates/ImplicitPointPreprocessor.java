@@ -37,8 +37,10 @@ public class ImplicitPointPreprocessor
 			for (Segment valueSeg : segmentPermutations.get(keySeg)) {
 				if (getValidImplicitPoint(keySeg, valueSeg) != null) {
 					Point implicit = getValidImplicitPoint(keySeg, valueSeg);
-					implicitPoints.add(implicit);
-					givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());
+					if (givenPoints.getPoint(implicit) == null) {
+						implicitPoints.add(implicit);
+						givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
+					}
 				}
 			}
 		}
