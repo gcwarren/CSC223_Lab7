@@ -1,54 +1,57 @@
 package geometry_objects;
 
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.Assert.*;
 import java.util.HashSet;
+import java.util.Set;
 import geometry_objects.points.*;
-
 import org.junit.jupiter.api.Test;
 
 public class SegmentTest {
 	
-	public Segment builder() {
-		Segment _segment = new Segment(new Point("A", 1,2), new Point("B", 5,4));
-		
+	public Set<Point> pointBuilder() {
+		Set<Point> _points = new HashSet<Point>();
+		_points.add(new Point(18, 6));
+		_points.add(new Point(21, 8));
+		_points.add(new Point(24, 11));
+		_points.add(new Point(8, 9));
+		_points.add(new Point(30, 36));
+		return _points;
+	}
+	
+	public Segment segBuilder() {
+		Segment _segment = new Segment(new Point(15, 4), new Point(24, 10));
 		return _segment;
 	}
 	
 	@Test 
 	public void hasSubSegmentTest() {
-		Segment segment = builder(); 
-		
-		Point pointA = new Point("A", 1,2);
-		Point pointB = new Point("B", 5,4);
-		Point pointC = new Point("C", 1, 2);
-		Point pointD = new Point("D", 3, 3);
-		Point pointE = new Point("E", 2, 2.5);
-		
-		
-		Segment segment1 = new Segment(pointC, pointB); 
-		Segment segment2 = new Segment(pointD, pointE);
-		Segment segment3 = new Segment(pointA, pointD);
-		
-		assertTrue(segment.HasSubSegment(segment1));
-		assertTrue(segment.HasSubSegment(segment2));
-		assertTrue(segment.HasSubSegment(segment3));
-
-		
 		
 		
 	}
 	
 	@Test
 	public void coincideWithoutOverlapTest() {
+		Segment segOne = segBuilder();
+		Segment segTwo = new Segment(new Point(21, 8), new Point(30, 14));
+		Segment segThree = new Segment(new Point(24, 10), new Point(30, 14));
 		
+		assertTrue(segOne.coincideWithoutOverlap(segThree));
+		assertFalse(segOne.coincideWithoutOverlap(segTwo));
 	}
 	
 	@Test
 	public void collectOrderedPointsOnSegmentTest() {
 		
-		Set<Point> givenPoints = new HashSet<Point>();
+		Set<Point> givenPoints = pointBuilder();
+		Segment testSeg = segBuilder();
 		
+		Set<Point> testSS = new HashSet<Point>();
+		testSS.add(new Point(15, 4));
+		testSS.add(new Point(18, 6));
+		testSS.add(new Point(21, 8));
+		testSS.add(new Point(24, 10));
+		
+		assertEquals(testSeg.collectOrderedPointsOnSegment(givenPoints), testSS);
 	}
 
 }
