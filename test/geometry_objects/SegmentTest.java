@@ -19,14 +19,20 @@ public class SegmentTest {
 	public void hasSubSegmentTest() {
 		Segment segment = builder(); 
 		
+		Point pointA = new Point("A", 1,2);
+		Point pointB = new Point("B", 5,4);
 		Point pointC = new Point("C", 1, 2);
+		Point pointD = new Point("D", 3, 3);
+		Point pointE = new Point("E", 2, 2.5);
 		
-		Segment segment1 = new Segment(pointC, new Point("B", 5,4)); 
-		Segment segment2 = new Segment(new Point("D", 3,3), new Point("E", 2, 2.5));
 		
+		Segment segment1 = new Segment(pointC, pointB); 
+		Segment segment2 = new Segment(pointD, pointE);
+		Segment segment3 = new Segment(pointA, pointD);
 		
 		assertTrue(segment.HasSubSegment(segment1));
 		assertTrue(segment.HasSubSegment(segment2));
+		assertTrue(segment.HasSubSegment(segment3));
 
 		
 		
