@@ -27,6 +27,7 @@ public class ImplicitPointPreprocessor
 	 *     		(dist(A, N) + dist(N, B)) == dist(A, B)
 	 *    	Then add it to the set of implicitPoints
 	 */
+	
 	public static Set<Point> compute(PointDatabase givenPoints, List<Segment> givenSegments)
 	{
 		Set<Point> implicitPoints = new LinkedHashSet<Point>();
