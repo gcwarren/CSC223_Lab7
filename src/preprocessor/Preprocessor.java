@@ -53,7 +53,7 @@ public class Preprocessor
 		
 		analyze();
 	}
-
+	
 	/**
 	 * Invoke the precomputation procedure.
 	 */
@@ -92,27 +92,30 @@ public class Preprocessor
 	}
 	
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
+		
+		Set<Segment> implicitSegments = new HashSet<Segment>();
 		// loop through the implicit point 
 		for (Point implicit : implicitPoints) {
-			//loop thourgh the segmentDatabase (Map)
+			//loop through the segmentDatabase (Map)
 			for (Segment seg : _givenSegments) {
 				// if the segment we are looping through have point lie between them 
 				// then add _implicitSegment by the new point 
 				if (seg.pointLiesBetweenEndpoints(implicit)) {
-					_implicitSegments.add(new Segment(implicit, seg.getPoint1()));
-					_implicitSegments.add(new Segment(implicit, seg.getPoint2()));
+					implicitSegments.add(new Segment(implicit, seg.getPoint1()));
+					implicitSegments.add(new Segment(implicit, seg.getPoint2()));
 				}
 			}
 		}
 		// then return the implicitSemgnet 
-		return _implicitSegments;
+		return implicitSegments;
 	}
 	
 	// then we have the class contain all implicit segment 
 	
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
 		 // add implicitSegment to to the allMininalSegment 
-		_allMinimalSegments.addAll(implicitSegments);
+		Set<Segment> allMinimalSegments = new HashSet<Segment>();
+		allMinimalSegments.addAll(implicitSegments);
 		
 		// loop through the givenSegment 
 		for (Segment seg : givenSegments) {
@@ -126,19 +129,21 @@ public class Preprocessor
 				
 			}
 			if (passesAllSegs) {
-				_allMinimalSegments.add(seg);
+				allMinimalSegments.add(seg);
 			}
 		}
-		return _allMinimalSegments;
+		return allMinimalSegments;
 	}
 	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 		
+		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
+		
 		for (Segment seg : _givenSegments) {
 			if (!minimalSegments.contains(seg)) {
-				_nonMinimalSegments.add(seg);
+				nonMinimalSegments.add(seg);
 			}
 		}
-		return _nonMinimalSegments;
+		return nonMinimalSegments;
 	}
 }

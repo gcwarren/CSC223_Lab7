@@ -32,42 +32,20 @@ public class ImplicitPointPreprocessor
 	{
 		Set<Point> implicitPoints = new LinkedHashSet<Point>();
 		
-		Map<Segment, Set<Segment>> segmentPermutations = findSegmentPermutations(givenSegments);
-		
-		for (Segment keySeg: segmentPermutations.keySet()) {
-			for (Segment valueSeg : segmentPermutations.get(keySeg)) {
-				if (getValidImplicitPoint(keySeg, valueSeg) != null) {
-					Point implicit = getValidImplicitPoint(keySeg, valueSeg);
+		for (int index_1 = 0; index_1 < givenSegments.size() -1; index_1++) {
+			for (int index_2 = index_1 + 1; index_2 < givenSegments.size(); index_2++) {
+				if (SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2)) != null) {
+					Point implicit = SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2));
 					if (givenPoints.getPoint(implicit) == null) {
 						implicitPoints.add(implicit);
 						givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
-					}
+					} 
 				}
 			}
 		}
-
+		
 		return implicitPoints;
 	}
 	
-	public static Map<Segment, Set<Segment>> findSegmentPermutations(List<Segment> givenSegments) {
-		
-		Map<Segment, Set<Segment>> segPerm = new HashMap<Segment, Set<Segment>>();
-		
-		for (int index = 0; index < givenSegments.size(); index++) {
-			
-			Segment currSegKey = givenSegments.get(index);
-			Set<Segment> edgeSegs = new HashSet<Segment>();
-			for (int count = index++; index < segPerm.size(); count++) {
-				edgeSegs.add(givenSegments.get(count));
-			}
-			segPerm.put(currSegKey, edgeSegs);
-		}
-		return segPerm;
-	}
 	
-	public static Point getValidImplicitPoint(Segment seg1, Segment seg2) {
-		
-		return SegmentIntersectionDelegate.findIntersection(seg1, seg2);
-	}
-
 }
