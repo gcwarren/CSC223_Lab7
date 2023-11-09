@@ -1,5 +1,6 @@
 package geometry_objects;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -71,7 +72,8 @@ public class Segment extends GeometricObject
 	 */
 	public boolean HasSubSegment(Segment candidate)
 	{
-        // TODO
+		if (! this.isCollinearWith(candidate)) return false;
+		return (this.pointLiesOnSegment(candidate.getPoint1()) && this.pointLiesOnSegment(candidate.getPoint2()));
 	}
 
 	/**
@@ -160,7 +162,9 @@ public class Segment extends GeometricObject
 	 */
 	public boolean coincideWithoutOverlap(Segment that)
 	{
-        // TODO
+		if (! this.isCollinearWith(that) || this.HasSubSegment(that)) return false;
+		
+		return (!this.pointLiesBetweenEndpoints(that.getPoint1()) && !this.pointLiesBetweenEndpoints(that.getPoint2()));
 	}
 	
 	/**
@@ -183,9 +187,10 @@ public class Segment extends GeometricObject
 	public SortedSet<Point> collectOrderedPointsOnSegment(Set<Point> points)
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
-
-        // TODO
-
+		
+		for (Point pt : points) {
+			if (this.pointLiesOnSegment(pt)) pointsOn.add(pt);
+		}
 		return pointsOn;
 	}
 }

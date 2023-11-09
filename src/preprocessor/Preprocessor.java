@@ -92,37 +92,31 @@ public class Preprocessor
 	}
 	
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
-		// loop through the implicit point 
+		
+		_implicitSegments = new HashSet<Segment>();
+		
 		for (Point implicit : implicitPoints) {
-			//loop thourgh the segmentDatabase (Map)
 			for (Segment seg : _givenSegments) {
-				// if the segment we are looping through have point lie between them 
-				// then add _implicitSegment by the new point 
 				if (seg.pointLiesBetweenEndpoints(implicit)) {
 					_implicitSegments.add(new Segment(implicit, seg.getPoint1()));
 					_implicitSegments.add(new Segment(implicit, seg.getPoint2()));
 				}
 			}
 		}
-		// then return the implicitSemgnet 
 		return _implicitSegments;
 	}
 	
-	// then we have the class contain all implicit segment 
-	
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
-		 // add implicitSegment to to the allMininalSegment 
+		
+		_allMinimalSegments = new HashSet<Segment>();
 		_allMinimalSegments.addAll(implicitSegments);
 		
-		// loop through the givenSegment 
 		for (Segment seg : givenSegments) {
-			//create a boolean passesAllSegs 
 			boolean passesAllSegs = true;
 			for (Point pt : _pointDatabase.getPoints()) {
 				if (seg.pointLiesBetweenEndpoints(pt)) {
 					passesAllSegs = false;
 				}
-				
 			}
 			if (passesAllSegs) {
 				_allMinimalSegments.add(seg);
@@ -132,6 +126,8 @@ public class Preprocessor
 	}
 	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
+		
+		_nonMinimalSegments =new HashSet<Segment>();
 		
 		for (Segment seg : _givenSegments) {
 			if (!minimalSegments.contains(seg)) {
