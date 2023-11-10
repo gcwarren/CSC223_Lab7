@@ -34,10 +34,9 @@ class PreprocessorTest
 		Preprocessor pp = new Preprocessor(points, segments);
 
 		// 5 new implied points inside the pentagon
-		Set<Point> iPoints = ImplicitPointPreprocessor.compute(points, new ArrayList<Segment>(segments));
-		assertEquals(5, iPoints.size());
+		assertEquals(5, pp._implicitPoints.size());
 
-		System.out.println(iPoints);
+		System.out.println(pp._implicitPoints);
 
 		//
 		//
