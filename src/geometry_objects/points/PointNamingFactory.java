@@ -16,19 +16,19 @@ public class PointNamingFactory
 	// Prefix associated with each generated name so those names are easily distinguishable
 	private static final String _PREFIX = "*_";
 
-    // Constants reflecting our naming characters for generated names.
+	// Constants reflecting our naming characters for generated names.
 	private static final char START_LETTER = 'A';
 	private static final char END_LETTER = 'Z';
 
-    //
-    // the number of characters in the generated names:
+	//
+	// the number of characters in the generated names:
 	// "A" and 1 -> "A"
 	// "B" and 3 -> "BBB"
 	//
 	private String _currentName = "A";
 	private char _currentCharacter = START_LETTER;
 	private int _numLetters = 1;
-	
+
 
 	//
 	// A hashed container for the database of points; this requires the Point
@@ -60,33 +60,37 @@ public class PointNamingFactory
 	 * Overloaded add / lookup mechanism for this database.
 	 *
 	 * @param pt -- a Point object (may or may not be named)
-	 
+
 	 * @return THE point object in the database corresponding to its coordinate pair
-                    * the object in the database if it already exists or
-					* a completely new point that has been added to the database
+	 * the object in the database if it already exists or
+	 * a completely new point that has been added to the database
 	 */
-	public Point put(Point pt) {	
-		//if the given point has a name, 
-		if (!pt.isUnnamed()) {
-			//check if that name already exists in the database. 
-			for (Point p: _database.keySet()) {
-				//if so, use getCurrentName()
-				if (p.getName().equals(pt.getName())) {
-					Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
-					_database.put(newPoint, newPoint);
-					return pt;
-				}
+	public Point put(Point pt) {
+
+		Point inDBTestPt = this.get(pt);
+		//if in the database, return it, we don't need to do anything
+		if (inDBTestPt != null) {
+			
+			if (inDBTestPt.getName().startsWith(_PREFIX)) {
+				_database.remove(inDBTestPt);
+				Point newPoint = new Point(pt.getName(), pt.getX(), pt.getY());
+				_database.put(newPoint, newPoint);
+				return newPoint;
 			}
-			//else, use the given name
-			_database.put(pt, pt);
-			return pt;
+			
+			return inDBTestPt;
 		}
+
 		//if the given point is unnamed, use getCurrentName()
-		else {
+		if (pt.isUnnamed()) {
 			Point newPoint = new Point(getCurrentName(), pt.getX(), pt.getY());
 			_database.put(newPoint, newPoint);
-			return pt;
+			return newPoint;
 		}
+		
+		//else, use the given name
+		_database.put(pt, pt);
+		return pt;
 	}
 
 	/**
@@ -96,8 +100,8 @@ public class PointNamingFactory
 	 * @param y -- single coordinate
 
 	 * @return THE point object in the database corresponding to its coordinate pair
-                    * the object in the database if it already exists or
-					* a completely new point that has been added to the database (with generated name)
+	 * the object in the database if it already exists or
+	 * a completely new point that has been added to the database (with generated name)
 	 */
 	public Point put(double x, double y) {
 		return put(new Point(x, y));
@@ -135,7 +139,7 @@ public class PointNamingFactory
 	public Point get(double x, double y) {
 		return _database.get(new Point(x, y));
 	}	
-	
+
 	public Point get(Point pt) {
 		return _database.get(new Point(pt.getX(), pt.getY()));
 	}
@@ -158,17 +162,17 @@ public class PointNamingFactory
 	 *
 	 * This method should also invoke updating of the current name
 	 * to reflect the 'next' name in the sequence.
-     *	 
+	 *	 
 	 * @return the next complete name in the sequence including prefix.
 	 */
 	private String getCurrentName() {
-        String name = _PREFIX + _currentName;
-        for (Point p: getAllPoints()) {
-        	if (name.equals(p.getName())) updateName();
-        }
-        name = _PREFIX + _currentName;
-        updateName();
-        return name;
+		String name = _PREFIX + _currentName;
+		for (Point p: getAllPoints()) {
+			if (name.equals(p.getName())) updateName();
+		}
+		name = _PREFIX + _currentName;
+		updateName();
+		return name;
 	}
 
 	/**
@@ -200,9 +204,9 @@ public class PointNamingFactory
 	@Override
 	public String toString() {
 		String output = "";
-        for (Point p: _database.keySet()) {
-        	output += String.format("%4s, %4d, %4d", p.getName() + p.getX() + p.getY() + "\n");
-        }
-        return output;
+		for (Point p: _database.keySet()) {
+			output += String.format("%4s, %4d, %4d", p.getName() + p.getX() + p.getY() + "\n");
+		}
+		return output;
 	}
 }

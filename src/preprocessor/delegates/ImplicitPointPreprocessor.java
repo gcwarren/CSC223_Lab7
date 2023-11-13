@@ -1,10 +1,7 @@
 package preprocessor.delegates;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import geometry_objects.Segment;
@@ -36,15 +33,18 @@ public class ImplicitPointPreprocessor
 			for (int index_2 = index_1 + 1; index_2 < givenSegments.size(); index_2++) {
 				Point implicit = SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2));
 				if (implicit != null && givenPoints.getPoint(implicit) == null) {
-					implicitPoints.add(new Point(Point.ANONYMOUS, implicit.getX(), implicit.getY()));
-//					implicitPoints.add(implicit);
 					givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
+					implicitPoints.add(givenPoints.getPoint(implicit.getX(), implicit.getY()));
 				} 
 			}
 		}
-		System.out.println(implicitPoints);
 		return implicitPoints;
 	}
 	
-	
+//	public String toString() {
+//		for (Point pt : ) {
+//			
+//		}
+//	}
+//	
 }

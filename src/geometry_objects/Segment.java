@@ -101,7 +101,7 @@ public class Segment extends GeometricObject
 		if (obj == null) return false;
 		
 		if (!(obj instanceof Segment)) return false;
-		Segment that = (Segment)obj;
+		Segment that = (Segment) obj;
 
 		return this.has(that.getPoint1()) && this.has(that.getPoint2());
 	}
@@ -195,5 +195,11 @@ public class Segment extends GeometricObject
 			if (this.pointLiesOnSegment(pt)) pointsOn.add(pt);
 		}
 		return pointsOn;
+	}
+	
+	@Override
+    public String toString()
+    {
+		return String.format("%s %s", _point1.toString(), _point2.toString());
 	}
 }

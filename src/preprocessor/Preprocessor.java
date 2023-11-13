@@ -101,8 +101,12 @@ public class Preprocessor
 				// if the segment we are looping through have point lie between them 
 				// then add _implicitSegment by the new point 
 				if (seg.pointLiesBetweenEndpoints(implicit)) {
-					implicitSegments.add(new Segment(implicit, seg.getPoint1()));
-					implicitSegments.add(new Segment(implicit, seg.getPoint2()));
+					if (!implicitSegments.contains(new Segment(implicit, seg.getPoint1())) && !_givenSegments.contains(new Segment(implicit, seg.getPoint1()))) {
+						implicitSegments.add(new Segment(implicit, seg.getPoint1()));
+					}
+					if (!implicitSegments.contains(new Segment(implicit, seg.getPoint2()))  && !_givenSegments.contains(new Segment(implicit, seg.getPoint2()))) {
+						implicitSegments.add(new Segment(implicit, seg.getPoint2()));						
+					}
 				}
 			}
 		}
