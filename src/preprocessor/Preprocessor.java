@@ -90,19 +90,25 @@ public class Preprocessor
 		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
-	//change for pull
+	
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 		
 		Set<Segment> implicitSegments = new HashSet<Segment>();
+		
+		
+		
 		// loop through the implicit point 
 		for (Point implicit : implicitPoints) {
 			//loop through the segmentDatabase (Map)
 			for (Segment seg : _givenSegments) {
 				// if the segment we are looping through have point lie between them 
 				// then add _implicitSegment by the new point 
+				System.out.println("segment" + seg.getPoint1().getName());
 				if (seg.pointLiesBetweenEndpoints(implicit)) {
 					if (!implicitSegments.contains(new Segment(implicit, seg.getPoint1())) && !_givenSegments.contains(new Segment(implicit, seg.getPoint1()))) {
 						implicitSegments.add(new Segment(implicit, seg.getPoint1()));
+						//System.out.println("test:" + seg.getPoint1()); 
+						System.out.println("implicit:" + implicit.getName());
 					}
 					if (!implicitSegments.contains(new Segment(implicit, seg.getPoint2()))  && !_givenSegments.contains(new Segment(implicit, seg.getPoint2()))) {
 						implicitSegments.add(new Segment(implicit, seg.getPoint2()));						
