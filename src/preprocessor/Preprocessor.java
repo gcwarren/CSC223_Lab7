@@ -90,7 +90,7 @@ public class Preprocessor
 		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
-	
+	//change for pull
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 		
 		Set<Segment> implicitSegments = new HashSet<Segment>();
