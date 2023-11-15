@@ -37,8 +37,8 @@ public class PointDatabase
 	/**
 	 * Add a point to the database.
 	 */
-	public void put(String name, double x, double y) {
-        _factory.put(name, x, y);
+	public Point put(String name, double x, double y) {
+        return _factory.put(name, x, y);
 	}
 
 	/**
@@ -88,5 +88,10 @@ public class PointDatabase
 	 */
 	public Point getPoint(double x, double y) {
         return getPoint(new Point(x, y));
+	}
+	
+	@Override
+	public String toString() {
+		return _factory.toString();
 	}
 }

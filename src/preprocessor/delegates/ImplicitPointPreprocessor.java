@@ -31,20 +31,16 @@ public class ImplicitPointPreprocessor
 		
 		for (int index_1 = 0; index_1 < givenSegments.size() -1; index_1++) {
 			for (int index_2 = index_1 + 1; index_2 < givenSegments.size(); index_2++) {
+				
 				Point implicit = SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2));
 				if (implicit != null && givenPoints.getPoint(implicit) == null) {
-					givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
-					implicitPoints.add(givenPoints.getPoint(implicit.getX(), implicit.getY()));
+					
+					Point pt = givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
+					implicitPoints.add(pt);
 				} 
 			}
 		}
 		return implicitPoints;
 	}
-	
-//	public String toString() {
-//		for (Point pt : ) {
-//			
-//		}
-//	}
-//	
+
 }

@@ -70,14 +70,14 @@ public class PointNamingFactory
 		Point inDBTestPt = this.get(pt);
 		//if in the database, return it, we don't need to do anything
 		if (inDBTestPt != null) {
-			
+
 			if (inDBTestPt.getName().startsWith(_PREFIX)) {
 				_database.remove(inDBTestPt);
 				Point newPoint = new Point(pt.getName(), pt.getX(), pt.getY());
 				_database.put(newPoint, newPoint);
 				return newPoint;
 			}
-			
+
 			return inDBTestPt;
 		}
 
@@ -87,7 +87,7 @@ public class PointNamingFactory
 			_database.put(newPoint, newPoint);
 			return newPoint;
 		}
-		
+
 		//else, use the given name
 		_database.put(pt, pt);
 		return pt;
@@ -167,10 +167,10 @@ public class PointNamingFactory
 	 */
 	private String getCurrentName() {
 		String name = _PREFIX + _currentName;
-		for (Point p: getAllPoints()) {
-			if (name.equals(p.getName())) updateName();
-		}
-		name = _PREFIX + _currentName;
+		//		for (Point p: getAllPoints()) {
+		//			if (name.equals(p.getName())) updateName();
+		//		}
+		//		name = _PREFIX + _currentName;
 		updateName();
 		return name;
 	}

@@ -116,8 +116,7 @@ public class Point implements Comparable<Point>
 	}
 	
 	@Override
-    public String toString()
-    {
+    public String toString() {
 		return String.format("%s(%.0f, %.0f)", this.getName(), this.getX(), this.getY());
 	}
 }

@@ -28,8 +28,10 @@ class PreprocessorTest
 		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
 
 		PointDatabase points = pair.getKey();
+//		System.out.println(points);
 
 		Set<Segment> segments = pair.getValue();
+		System.out.println(segments.toString());
 
 		Preprocessor pp = new Preprocessor(points, segments);
 
@@ -66,7 +68,7 @@ class PreprocessorTest
 		// There are 15 implied segments inside the pentagon; see figure above
 		//
 		Set<Segment> iSegments = pp.computeImplicitBaseSegments(pp._implicitPoints);
-		System.out.print(iSegments); //i added this, remove it later
+		System.out.println(iSegments); //i added this, remove it later
 		assertEquals(15, iSegments.size());
 
 		List<Segment> expectedISegments = new ArrayList<Segment>();
