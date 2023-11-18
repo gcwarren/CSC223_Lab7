@@ -94,4 +94,8 @@ public class PointDatabase
 	public String toString() {
 		return _factory.toString();
 	}
+	
+	public Set<Point> toSet() {
+		return _factory.toSet();
+	}
 }

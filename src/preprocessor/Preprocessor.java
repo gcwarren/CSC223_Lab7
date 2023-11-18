@@ -110,76 +110,85 @@ public class Preprocessor
 
 		for (Segment seg : _givenSegments) {
 			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
-			Iterator<Point> iterate = ptsOnSeg.iterator();
-			Point currPoint = iterate.next();
-
-			while (iterate.hasNext()) {
-				implicitSegments.add(new Segment(currPoint, iterate.next()));
+			
+			if (ptsOnSeg.size() > 2) { //makes sure there are implicit points on the segment 
+				for (Point pt1 : ptsOnSeg) {
+					for (Point pt2 : ptsOnSeg) {
+						Segment implicitSeg = new Segment(pt1, pt2);
+						if ((!pt1.equals(pt2)) && isMinimal(implicitSeg)) {
+							implicitSegments.add(implicitSeg);
+						}
+					}
+				}
 			}
 		}
 		return implicitSegments;
 	}
+	
+	public boolean isMinimal(Segment seg) {
+		return seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2;
+	}
 
-// then we have the class contain all implicit segment 
+	// then we have the class contain all implicit segment 
 
-/**
- * From the 'given' segments we remove any non-minimal segment.
- * 
- * @param impPoints -- the implicit points for the figure
- * @param givenSegments -- segments provided by the user
- * @param minimalImpSegments -- minimal implicit segments computed from the implicit points
- * @return -- a 
- */
-public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
-	//check that there is nothing inside a segment
-	//use hasSubSegment
+	/**
+	 * From the 'given' segments we remove any non-minimal segment.
+	 * 
+	 * @param impPoints -- the implicit points for the figure
+	 * @param givenSegments -- segments provided by the user
+	 * @param minimalImpSegments -- minimal implicit segments computed from the implicit points
+	 * @return -- a 
+	 */
+	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
+		//check that there is nothing inside a segment
+		//use hasSubSegment
 
 
-	// add implicitSegment to to the allMininalSegment 
-	Set<Segment> allMinimalSegments = new HashSet<Segment>();
-	allMinimalSegments.addAll(implicitSegments);
+		// add implicitSegment to to the allMininalSegment 
+		Set<Segment> allMinimalSegments = new HashSet<Segment>();
+		allMinimalSegments.addAll(implicitSegments);
 
-	// loop through the givenSegment 
-	for (Segment seg : givenSegments) {
-		//create a boolean passesAllSegs 
+		// loop through the givenSegment 
+		for (Segment seg : givenSegments) {
+			//create a boolean passesAllSegs 
 
-		boolean passesAllSegs = true;
-		for (Point pt : _pointDatabase.getPoints()) {
-			if (seg.pointLiesBetweenEndpoints(pt)) {
-				passesAllSegs = false;
+			boolean passesAllSegs = true;
+			for (Point pt : _pointDatabase.getPoints()) {
+				if (seg.pointLiesBetweenEndpoints(pt)) {
+					passesAllSegs = false;
+				}
+
 			}
-
+			if (passesAllSegs) {
+				allMinimalSegments.add(seg);
+			}
 		}
-		if (passesAllSegs) {
-			allMinimalSegments.add(seg);
-		}
+		return allMinimalSegments;
 	}
-	return allMinimalSegments;
-}
 
-/**
- * Given a set of minimal segments, build non-minimal segments by appending
- * minimal segments (one at a time).
- * 
- * (Recursive construction of segments.)
- */
-public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
+	/**
+	 * Given a set of minimal segments, build non-minimal segments by appending
+	 * minimal segments (one at a time).
+	 * 
+	 * (Recursive construction of segments.)
+	 */
+	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 
-	//build every possible nonminimal from calculated minimal 
-	//this is combinations 
+		//build every possible nonminimal from calculated minimal 
+		//this is combinations 
 
-	//recursive or nested loops
-	//go through all minimal segments with all minimal segments to create the set of all segments that have 2 minimal segments
-	//then go through all 2 segs with minimal segs... 
-	//your stopping condition is when an iteration occurs where you created nothing new (i.e. no 4 segs from your 3 segs) 
+		//recursive or nested loops
+		//go through all minimal segments with all minimal segments to create the set of all segments that have 2 minimal segments
+		//then go through all 2 segs with minimal segs... 
+		//your stopping condition is when an iteration occurs where you created nothing new (i.e. no 4 segs from your 3 segs) 
 
-	Set<Segment> nonMinimalSegments = new HashSet<Segment>();
+		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
 
-	for (Segment seg : _givenSegments) {
-		if (!minimalSegments.contains(seg)) {
-			nonMinimalSegments.add(seg);
+		for (Segment seg : _givenSegments) {
+			if (!minimalSegments.contains(seg)) {
+				nonMinimalSegments.add(seg);
+			}
 		}
+		return nonMinimalSegments;
 	}
-	return nonMinimalSegments;
-}
 }
