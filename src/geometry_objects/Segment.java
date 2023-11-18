@@ -200,6 +200,6 @@ public class Segment extends GeometricObject
 	@Override
     public String toString()
     {
-		return String.format("%s %s", _point1.toString(), _point2.toString());
+		return String.format("Seg(%s, %s)", _point1.toString(), _point2.toString());
 	}
 }

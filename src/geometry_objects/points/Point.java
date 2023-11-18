@@ -102,6 +102,7 @@ public class Point implements Comparable<Point>
 			if (MathUtilities.doubleEquals(this.getY(), that.getY())) return 0;
 		}
 		return -2;
+		//TEST FOR EQUALITY FIRST, USE EQUALS(), DON'T DO -2 WITH NO COMMENT, COULD BE -1 
 	}
 	
 	@Override
