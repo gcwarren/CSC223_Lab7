@@ -188,8 +188,8 @@ public class Segment extends GeometricObject
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
 		
-		points.add(this.getPoint1());
-		points.add(this.getPoint2());
+		pointsOn.add(this.getPoint1());
+		pointsOn.add(this.getPoint2());
 		
 		for (Point pt : points) {
 			if (this.pointLiesOnSegment(pt)) pointsOn.add(pt);

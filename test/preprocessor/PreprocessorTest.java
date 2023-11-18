@@ -70,7 +70,7 @@ class PreprocessorTest
 		Set<Segment> iSegments = pp.computeImplicitBaseSegments(pp._implicitPoints);
 		System.out.println(pp._givenSegments);
 		System.out.println(iSegments); //i added this, remove it later
-//		assertEquals(15, iSegments.size());
+		assertEquals(15, iSegments.size());
 
 		List<Segment> expectedISegments = new ArrayList<Segment>();
 

@@ -34,7 +34,6 @@ public class ImplicitPointPreprocessor
 				
 				Point implicit = SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2));
 				if (implicit != null && givenPoints.getPoint(implicit) == null) {
-					System.out.println(givenPoints.getPoint(implicit));
 					
 					Point pt = givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
 					implicitPoints.add(pt);
