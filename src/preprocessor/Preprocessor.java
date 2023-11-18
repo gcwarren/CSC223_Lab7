@@ -2,6 +2,7 @@ package preprocessor;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -91,9 +92,33 @@ public class Preprocessor
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
 
+	/**
+	 * If two segments cross at an unnamed point, the result is an implicit point.
+	 *
+	 * This new implicit point may be found on any of the existing segments (possibly
+	 * with others implicit points on the same segment).
+	 * This results in new, minimal sub-segments.
+	 *
+	 * For example,   A----*-------*----*---B will result in 4 new base segments.
+	 *
+	 * @param impPoints -- implicit points computed from segment intersections
+	 * @return a set of implicitly defined segments
+	 */
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 
 		Set<Segment> implicitSegments = new HashSet<Segment>();
+		
+		for (Segment seg : _givenSegments) {
+			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
+			Iterator<Point> iterate = ptsOnSeg.iterator();
+			Point currPoint = iterate.next();
+			
+			while (iterate.hasNext()) {
+				implicitSegments.add(new Segment(currPoint, iterate.next()));
+			}
+			
+			return implicitSegments;
+		}
 
 		//should be **minimal** implicit segments ONLY
 		//collect ordered poionts 
@@ -118,6 +143,14 @@ public class Preprocessor
 
 	// then we have the class contain all implicit segment 
 
+	/**
+	 * From the 'given' segments we remove any non-minimal segment.
+	 * 
+	 * @param impPoints -- the implicit points for the figure
+	 * @param givenSegments -- segments provided by the user
+	 * @param minimalImpSegments -- minimal implicit segments computed from the implicit points
+	 * @return -- a 
+	 */
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
 		//check that there is nothing inside a segment
 		//use hasSubSegment
@@ -145,6 +178,12 @@ public class Preprocessor
 		return allMinimalSegments;
 	}
 
+	/**
+	 * Given a set of minimal segments, build non-minimal segments by appending
+	 * minimal segments (one at a time).
+	 * 
+	 * (Recursive construction of segments.)
+	 */
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 		
 		//build every possible nonminimal from calculated minimal 
