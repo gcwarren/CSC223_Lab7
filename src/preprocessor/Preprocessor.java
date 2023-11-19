@@ -1,11 +1,7 @@
 package preprocessor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -102,18 +98,20 @@ public class Preprocessor
 	 * This results in new, minimal sub-segments.
 	 *
 	 * For example,   A----*-------*----*---B will result in 4 new base segments.
-	 *
-	 * @param impPoints -- implicit points computed from segment intersections
-	 * @return a set of implicitly defined segments
 	 */
 	public Set<Segment> computeImplicitBaseSegments(Set<Point> implicitPoints) {
 
 		Set<Segment> implicitSegments = new HashSet<Segment>();
 
+		//for each segment in _givenSegments, 
 		for (Segment seg : _givenSegments) {
 			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
 
-			if (ptsOnSeg.size() > 2) { //makes sure there are implicit points on the segment 
+			//if there is at least one implicit point on the segment ,
+			if (ptsOnSeg.size() > 2) { 
+				//iterate over all points on the segment, and create all segments for which the segment is 
+				//	minimal, and 
+				//	contains two points which are not equal to one another 
 				for (Point pt1 : ptsOnSeg) {
 					for (Point pt2 : ptsOnSeg) {
 						Segment implicitSeg = new Segment(pt1, pt2);
@@ -128,19 +126,10 @@ public class Preprocessor
 	}
 
 	public boolean isMinimal(Segment seg) {
+		//isMinimal confirms that no points in the database lie on a given segment 
 		return seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2;
 	}
 
-	// then we have the class contain all implicit segment 
-
-	/**
-	 * From the 'given' segments we remove any non-minimal segment.
-	 * 
-	 * @param impPoints -- the implicit points for the figure
-	 * @param givenSegments -- segments provided by the user
-	 * @param minimalImpSegments -- minimal implicit segments computed from the implicit points
-	 * @return -- a 
-	 */
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
 		//check that there is nothing inside a segment
 		//use hasSubSegment
@@ -150,7 +139,7 @@ public class Preprocessor
 		Set<Segment> allMinimalSegments = new HashSet<Segment>();
 		allMinimalSegments.addAll(implicitSegments);
 
-		// loop through the givenSegment 
+		// loop through the givenSegments
 		for (Segment seg : givenSegments) {
 			boolean passes = true;
 			for (Segment impSeg : implicitSegments) {
@@ -158,23 +147,20 @@ public class Preprocessor
 					passes = false;
 				}
 			}
+			//	if the minimalSegment contains no implicitSegments, add it
+			//		note: containing an implicit segment - for which all calculated are minimal - would imply a NON minimal segment
 			if (passes) allMinimalSegments.add(seg);
 		}
 		return allMinimalSegments;
 	}
 
-	/**
-	 * Given a set of minimal segments, build non-minimal segments by appending
-	 * minimal segments (one at a time).
-	 * 
-	 * (Recursive construction of segments.)
-	 */
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
 		Set<Segment> tempSegments = new HashSet<Segment>();
 		Set<Point> minSegPoints = findAllMinimalSegmentPoints(minimalSegments);
 
+		//create a set of all possible segments, given the full _pointDatabase (explicit and implicit points) 
 		for (Point pt1 : _pointDatabase.getPoints()) {
 			for (Point pt2 : _pointDatabase.getPoints()) {
 				if (!pt1.equals(pt2)) {
@@ -183,6 +169,12 @@ public class Preprocessor
 			}
 		}
 
+		/** for each of those created segments, if that segment 
+		 * 		contains any minimal segment as a minimal segment,
+		 * 		is not a minimal segment, and 
+		 * 		contains two points which are both included in some minimal segment
+		 * 	add it to a set of non-minimal segments 
+		 */
 		for (Segment tempSeg : tempSegments) {
 			for (Segment minSeg : minimalSegments) {
 				if (tempSeg.HasSubSegment(minSeg) && !tempSeg.equals(minSeg) && 
@@ -197,6 +189,8 @@ public class Preprocessor
 	public Set<Point> findAllMinimalSegmentPoints(Set<Segment> minimalSegments) {
 		Set<Point> minSegPoints = new TreeSet<Point>();
 		
+		//	for each minimal segment, add each point to a set to calculate all points that are actually in the figure 
+		//	(not in the file in general) 
 		for (Segment minSeg : minimalSegments) {
 			minSegPoints.add(minSeg.getPoint1());
 			minSegPoints.add(minSeg.getPoint2());
