@@ -150,18 +150,13 @@ public class Preprocessor
 
 		// loop through the givenSegment 
 		for (Segment seg : givenSegments) {
-			//create a boolean passesAllSegs 
-
-			boolean passesAllSegs = true;
-			for (Point pt : _pointDatabase.getPoints()) {
-				if (seg.pointLiesBetweenEndpoints(pt)) {
-					passesAllSegs = false;
+			boolean passes = true;
+			for (Segment impSeg : implicitSegments) {
+				if (seg.HasSubSegment(impSeg)) {
+					passes = false;
 				}
-
 			}
-			if (passesAllSegs) {
-				allMinimalSegments.add(seg);
-			}
+			if (passes) allMinimalSegments.add(seg);
 		}
 		return allMinimalSegments;
 	}
