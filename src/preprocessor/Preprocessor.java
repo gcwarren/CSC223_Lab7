@@ -171,14 +171,6 @@ public class Preprocessor
 	 */
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 
-		//build every possible nonminimal from calculated minimal 
-		//this is combinations 
-
-		//recursive or nested loops
-		//go through all minimal segments with all minimal segments to create the set of all segments that have 2 minimal segments
-		//then go through all 2 segs with minimal segs... 
-		//your stopping condition is when an iteration occurs where you created nothing new (i.e. no 4 segs from your 3 segs) 
-
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
 		Set<Segment> tempSegments = new HashSet<Segment>();
 		Set<Point> minSegPoints = findAllMinimalSegmentPoints(minimalSegments);

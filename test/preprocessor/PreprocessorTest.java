@@ -22,7 +22,6 @@ class PreprocessorTest
 	@Test
 	void test_implicit_crossings()
 	{
-		                                 // TODO: Update this file path for your particular project
 		FigureNode fig = InputFacade.extractFigure("fully_connected_irregular_polygon.json");
 
 		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
@@ -124,10 +123,8 @@ class PreprocessorTest
 		
 		//
 		// All Segments will consist of the new 15 non-minimal segments.
-		//
-		System.out.println("Computed Segments: " + computedNonMinimalSegments);
-		
-//		assertEquals(15, computedNonMinimalSegments.size());
+		//		
+		assertEquals(15, computedNonMinimalSegments.size());
 
 		//
 		// Ensure we have ALL minimal segments: 20 in this figure.
@@ -155,9 +152,7 @@ class PreprocessorTest
 		
 		//
 		// Check size and content equality
-		//
-		System.out.println("Expected Segments: " + expectedNonMinimalSegments);
-		
+		//		
 		assertEquals(expectedNonMinimalSegments.size(), computedNonMinimalSegments.size());
 
 		for (Segment computedNonMinimalSegment : computedNonMinimalSegments)
