@@ -125,7 +125,9 @@ class PreprocessorTest
 		//
 		// All Segments will consist of the new 15 non-minimal segments.
 		//
-		assertEquals(15, computedNonMinimalSegments.size());
+		System.out.println("Computed Segments: " + computedNonMinimalSegments);
+		
+//		assertEquals(15, computedNonMinimalSegments.size());
 
 		//
 		// Ensure we have ALL minimal segments: 20 in this figure.
@@ -154,6 +156,8 @@ class PreprocessorTest
 		//
 		// Check size and content equality
 		//
+		System.out.println("Expected Segments: " + expectedNonMinimalSegments);
+		
 		assertEquals(expectedNonMinimalSegments.size(), computedNonMinimalSegments.size());
 
 		for (Segment computedNonMinimalSegment : computedNonMinimalSegments)

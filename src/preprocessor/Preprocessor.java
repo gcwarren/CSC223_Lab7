@@ -1,5 +1,6 @@
 package preprocessor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
@@ -110,7 +112,7 @@ public class Preprocessor
 
 		for (Segment seg : _givenSegments) {
 			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
-			
+
 			if (ptsOnSeg.size() > 2) { //makes sure there are implicit points on the segment 
 				for (Point pt1 : ptsOnSeg) {
 					for (Point pt2 : ptsOnSeg) {
@@ -124,7 +126,7 @@ public class Preprocessor
 		}
 		return implicitSegments;
 	}
-	
+
 	public boolean isMinimal(Segment seg) {
 		return seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2;
 	}
@@ -178,12 +180,35 @@ public class Preprocessor
 		//your stopping condition is when an iteration occurs where you created nothing new (i.e. no 4 segs from your 3 segs) 
 
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
+		Set<Segment> tempSegments = new HashSet<Segment>();
+		Set<Point> minSegPoints = findAllMinimalSegmentPoints(minimalSegments);
 
-		for (Segment seg : _givenSegments) {
-			if (!minimalSegments.contains(seg)) {
-				nonMinimalSegments.add(seg);
+		for (Point pt1 : _pointDatabase.getPoints()) {
+			for (Point pt2 : _pointDatabase.getPoints()) {
+				if (!pt1.equals(pt2)) {
+					tempSegments.add(new Segment(pt1, pt2));
+				}
+			}
+		}
+
+		for (Segment tempSeg : tempSegments) {
+			for (Segment minSeg : minimalSegments) {
+				if (tempSeg.HasSubSegment(minSeg) && !tempSeg.equals(minSeg) && 
+					minSegPoints.contains(tempSeg.getPoint1()) && minSegPoints.contains(tempSeg.getPoint2())) {
+					nonMinimalSegments.add(tempSeg);
+				}
 			}
 		}
 		return nonMinimalSegments;
+	}
+	
+	public Set<Point> findAllMinimalSegmentPoints(Set<Segment> minimalSegments) {
+		Set<Point> minSegPoints = new TreeSet<Point>();
+		
+		for (Segment minSeg : minimalSegments) {
+			minSegPoints.add(minSeg.getPoint1());
+			minSegPoints.add(minSeg.getPoint2());
+		}
+		return minSegPoints;
 	}
 }
