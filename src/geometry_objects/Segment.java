@@ -72,6 +72,7 @@ public class Segment extends GeometricObject
 	 */
 	public boolean HasSubSegment(Segment candidate)
 	{
+		//	if the segment is collinear with the candidate and both points of the candidate lie on the segment, return true 
 		if (! this.isCollinearWith(candidate)) return false;
 		return (this.pointLiesOnSegment(candidate.getPoint1()) && this.pointLiesOnSegment(candidate.getPoint2()));
 	}
@@ -162,8 +163,10 @@ public class Segment extends GeometricObject
 	 */
 	public boolean coincideWithoutOverlap(Segment that)
 	{
+		//	if that segment is collinear with this, and this does not contain that as a subsegment 
 		if (! this.isCollinearWith(that) || this.HasSubSegment(that)) return false;
 		
+		//	if both points of this are not between the endpoints of that, return true 
 		return (!this.pointLiesBetweenEndpoints(that.getPoint1()) && !this.pointLiesBetweenEndpoints(that.getPoint2()));
 	}
 	
@@ -186,11 +189,14 @@ public class Segment extends GeometricObject
 	 */
 	public SortedSet<Point> collectOrderedPointsOnSegment(Set<Point> points)
 	{
+		//	automatically add the end points of a segment to the set 
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
 		
 		pointsOn.add(this.getPoint1());
 		pointsOn.add(this.getPoint2());
 		
+		//	for each point in the set of points given, if it lies on the segment, add it to the set 
+		//	because this is a sorted set, it will automatically use the lexicographicOrdering method defined in the Point class
 		for (Point pt : points) {
 			if (this.pointLiesOnSegment(pt)) pointsOn.add(pt);
 		}

@@ -29,12 +29,15 @@ public class ImplicitPointPreprocessor
 	{
 		Set<Point> implicitPoints = new LinkedHashSet<Point>();
 		
+		//	for each segment in the database and the segment which follows
 		for (int index_1 = 0; index_1 < givenSegments.size() -1; index_1++) {
 			for (int index_2 = index_1 + 1; index_2 < givenSegments.size(); index_2++) {
 				
+				//	find the intersection of those to segments
 				Point implicit = SegmentIntersectionDelegate.findIntersection(givenSegments.get(index_1), givenSegments.get(index_2));
 				if (implicit != null && givenPoints.getPoint(implicit) == null) {
 					
+					//	if the intersection is not in the point database, and it is != null, add it to implicitPoints
 					Point pt = givenPoints.put(Point.ANONYMOUS, implicit.getX(), implicit.getY());	
 					implicitPoints.add(pt);
 				} 
