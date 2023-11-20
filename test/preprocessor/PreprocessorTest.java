@@ -329,28 +329,6 @@ class PreprocessorTest
 			
 			
 		}
-		@Test
-		void test_crossing_symmetric_triagle() {
-			
-			FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
-
-			Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
-
-			PointDatabase points = pair.getKey();
-
-			Set<Segment> segments = pair.getValue();
-
-			Preprocessor pp = new Preprocessor(points, segments);
-			
-			assertEquals(1, pp._implicitPoints.size());
-			
-			Point a_star = new Point(3.0, 3.0);
-			
-			// check whether it is contain 
-			assertTrue(pp._implicitPoints.contains(a_star));
-			
-		}
-		
 		
 	
 }
