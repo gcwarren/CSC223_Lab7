@@ -169,6 +169,8 @@ public class Preprocessor
 	 * 
 	 * (Recursive construction of segments.)
 	 */
+	
+	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
