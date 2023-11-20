@@ -110,31 +110,22 @@ public class Preprocessor
 
 		Set<Segment> implicitSegments = new HashSet<Segment>();
 
-		//for each segment in _givenSegments, 
+		//	for each segment in _givenSegments, 
 		for (Segment seg : _givenSegments) {
-			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
+			//	create a list of order implicit points on that segment 
+			List<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints).stream().toList();
 
-			//makes sure there are implicit points on the segment 
-			if (ptsOnSeg.size() > 2) { 
-				//	iterate over all points on the segment, and create all segments for which the segment is 
-				//	minimal, and 
-				//	contains two points which are not equal to one another 
-				for (Point pt1 : ptsOnSeg) {
-					for (Point pt2 : ptsOnSeg) {
-						Segment implicitSeg = new Segment(pt1, pt2);
-						if ((!pt1.equals(pt2)) && isMinimal(implicitSeg)) {
-							implicitSegments.add(implicitSeg);
-						}
-					}
+			//	for each pair of ordered points on that segment 
+			for (int index_1 = 0; index_1 < ptsOnSeg.size() - 1; index_1++) {
+				Segment potentialSeg = new Segment(ptsOnSeg.get(index_1), ptsOnSeg.get(index_1 + 1));
+
+				//	if that segment is not already contained in _givenSegments, add it to implicitSegments
+				if (!_givenSegments.contains(potentialSeg)) {
+					implicitSegments.add(potentialSeg);
 				}
 			}
 		}
 		return implicitSegments;
-	}
-
-	public boolean isMinimal(Segment seg) {
-		//	isMinimal confirms that no points in the database lie on a given segment 
-		return seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2;
 	}
 
 	// then we have the class contain all implicit segment 
@@ -148,26 +139,28 @@ public class Preprocessor
 	 * @return -- a 
 	 */
 	public Set<Segment> identifyAllMinimalSegments(Set<Point> implicitPoints, Set<Segment> givenSegments, Set<Segment> implicitSegments) {
-		//check that there is nothing inside a segment
-		//use hasSubSegment
-
-
-		// add implicitSegment to to the allMininalSegment 
+		// add implicitBaseSegments (which are all minimal) to to allMininalSegments
 		Set<Segment> allMinimalSegments = new HashSet<Segment>();
 		allMinimalSegments.addAll(implicitSegments);
 
-		// loop through the givenSegment 
+		// loop through the givenSegments
+		//		if no points in the database lie on that segment, it must be minimal
+		//		add it to allMinimalSegments 
 		for (Segment seg : givenSegments) {
-			boolean passes = true;
-			for (Segment impSeg : implicitSegments) {
-				//	if the minimalSegment contains no implicitSegments, add it
-				//		note: containing an implicit segment - for which all calculated 
-				//		are minimal - would imply a NON minimal segment
-				if (seg.HasSubSegment(impSeg)) {
-					passes = false;
-				}
+
+			//			make a local variable with given and implicit segments 
+			//			iterate over those (indexed) and make a boolean with hasSubSegment 
+			//			if for loop never changes the boolean, add it 
+			//			
+			//			boolean passes 
+			//			
+			//			for (Segment seg : implicitSegments) {
+			//				
+			//			}
+
+			if (seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2) {
+				allMinimalSegments.add(seg);
 			}
-			if (passes) allMinimalSegments.add(seg);
 		}
 		return allMinimalSegments;
 	}
@@ -178,44 +171,48 @@ public class Preprocessor
 	 * 
 	 * (Recursive construction of segments.)
 	 */
-	
-	
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegments) {
 
+		Set<Segment> allMinimalSegments = _allMinimalSegments;
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
-		Set<Segment> tempSegments = new HashSet<Segment>();
-		Set<Point> minSegPoints = findAllMinimalSegmentPoints(minimalSegments);
 
-		//create a set of all possible segments, given the full _pointDatabase (explicit and implicit points) 
-		for (Point pt1 : _pointDatabase.getPoints()) {
-			for (Point pt2 : _pointDatabase.getPoints()) {
-				if (!pt1.equals(pt2)) {
-					tempSegments.add(new Segment(pt1, pt2));
-				}
-			}
-		}
-
-		for (Segment tempSeg : tempSegments) {
-			//	for each minimal segment, add each point to a set to calculate all points that 
-			//	are actually in the figure 
-			//	(not in the file in general) 
-			for (Segment minSeg : minimalSegments) {
-				if (tempSeg.HasSubSegment(minSeg) && !tempSeg.equals(minSeg) && 
-					minSegPoints.contains(tempSeg.getPoint1()) && minSegPoints.contains(tempSeg.getPoint2())) {
-					nonMinimalSegments.add(tempSeg);
-				}
-			}
-		}
-		return nonMinimalSegments;
+		return constructAllNonMinimalSegments(allMinimalSegments, allMinimalSegments, nonMinimalSegments);
 	}
-	
-	public Set<Point> findAllMinimalSegmentPoints(Set<Segment> minimalSegments) {
-		Set<Point> minSegPoints = new TreeSet<Point>();
-		
-		for (Segment minSeg : minimalSegments) {
-			minSegPoints.add(minSeg.getPoint1());
-			minSegPoints.add(minSeg.getPoint2());
+
+	private Set<Segment> constructAllNonMinimalSegments(Set<Segment> allMinimalSegments, Set<Segment> workList, Set<Segment> nonMinimalSegments) {
+
+		//	base case: when the work list is empty, no non-minimal segments have been found
+		//			   thus, there are no more to create, return them as is
+		if (workList.isEmpty()) return nonMinimalSegments;
+
+		//	cast your workList and nonMinimalSegments to list so they're iterable
+		Set<Segment> newWorkList = new HashSet<Segment>();
+		List<Segment> wList = workList.stream().toList();
+		List<Segment> nonMinSeg = nonMinimalSegments.stream().toList();
+
+		//for each item in the workList 
+		for (int index_1 = 0; index_1 < wList.size(); index_1++) {
+			//for each item in the nonMinimalSegments 
+			for (int index_2 = 0; index_2 < nonMinSeg.size(); index_2++) {
+
+				//	if there exists a segment that coincide without overlap
+				Segment seg1 = wList.get(index_1);
+				Segment seg2 = nonMinSeg.get(index_2);
+				if (seg1.coincideWithoutOverlap(seg2) && seg2.coincideWithoutOverlap(seg1)) {
+
+					//	for which there is also a shared vertex (meaning the segments touch)
+					//	find it, and use the other two segments to create a new segment 
+					Point point1 = seg1.other(seg1.sharedVertex(seg2));
+					Point point2 = seg2.other(seg1.sharedVertex(seg2));
+
+					if (point1 != null && point2 != null) {
+
+						newWorkList.add(new Segment(point1, point2));
+						nonMinimalSegments.add(new Segment(point1, point2));	
+					}
+				}
+			}
 		}
-		return minSegPoints;
+		return constructAllNonMinimalSegments(allMinimalSegments, newWorkList, nonMinimalSegments);
 	}
 }
