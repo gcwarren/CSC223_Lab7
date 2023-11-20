@@ -72,8 +72,11 @@ public class Segment extends GeometricObject
 	 */
 	public boolean HasSubSegment(Segment candidate)
 	{
-		//	if the segment is collinear with the candidate and both points of the candidate lie on the segment, return true 
+		//	if the segment is collinear with the candidate and both points of the 
+		//	candidate lie on the segment, return true 
 		if (! this.isCollinearWith(candidate)) return false;
+		
+		//	if both points of this are not between the endpoints of that, return true 
 		return (this.pointLiesOnSegment(candidate.getPoint1()) && this.pointLiesOnSegment(candidate.getPoint2()));
 	}
 

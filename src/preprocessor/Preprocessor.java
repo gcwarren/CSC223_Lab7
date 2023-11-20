@@ -110,10 +110,15 @@ public class Preprocessor
 
 		Set<Segment> implicitSegments = new HashSet<Segment>();
 
+		//for each segment in _givenSegments, 
 		for (Segment seg : _givenSegments) {
 			SortedSet<Point> ptsOnSeg = seg.collectOrderedPointsOnSegment(implicitPoints);
 
-			if (ptsOnSeg.size() > 2) { //makes sure there are implicit points on the segment 
+			//makes sure there are implicit points on the segment 
+			if (ptsOnSeg.size() > 2) { 
+				//	iterate over all points on the segment, and create all segments for which the segment is 
+				//	minimal, and 
+				//	contains two points which are not equal to one another 
 				for (Point pt1 : ptsOnSeg) {
 					for (Point pt2 : ptsOnSeg) {
 						Segment implicitSeg = new Segment(pt1, pt2);
@@ -128,6 +133,7 @@ public class Preprocessor
 	}
 
 	public boolean isMinimal(Segment seg) {
+		//	isMinimal confirms that no points in the database lie on a given segment 
 		return seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2;
 	}
 
@@ -154,6 +160,9 @@ public class Preprocessor
 		for (Segment seg : givenSegments) {
 			boolean passes = true;
 			for (Segment impSeg : implicitSegments) {
+				//	if the minimalSegment contains no implicitSegments, add it
+				//		note: containing an implicit segment - for which all calculated 
+				//		are minimal - would imply a NON minimal segment
 				if (seg.HasSubSegment(impSeg)) {
 					passes = false;
 				}
@@ -177,6 +186,7 @@ public class Preprocessor
 		Set<Segment> tempSegments = new HashSet<Segment>();
 		Set<Point> minSegPoints = findAllMinimalSegmentPoints(minimalSegments);
 
+		//create a set of all possible segments, given the full _pointDatabase (explicit and implicit points) 
 		for (Point pt1 : _pointDatabase.getPoints()) {
 			for (Point pt2 : _pointDatabase.getPoints()) {
 				if (!pt1.equals(pt2)) {
@@ -186,6 +196,9 @@ public class Preprocessor
 		}
 
 		for (Segment tempSeg : tempSegments) {
+			//	for each minimal segment, add each point to a set to calculate all points that 
+			//	are actually in the figure 
+			//	(not in the file in general) 
 			for (Segment minSeg : minimalSegments) {
 				if (tempSeg.HasSubSegment(minSeg) && !tempSeg.equals(minSeg) && 
 					minSegPoints.contains(tempSeg.getPoint1()) && minSegPoints.contains(tempSeg.getPoint2())) {
