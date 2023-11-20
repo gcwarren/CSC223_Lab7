@@ -191,6 +191,7 @@ public class Segment extends GeometricObject
 	{
 		//	automatically add the end points of a segment to the set 
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
+		//List<Point> name = new points.stream.tolist
 		
 		pointsOn.add(this.getPoint1());
 		pointsOn.add(this.getPoint2());
