@@ -148,16 +148,6 @@ public class Preprocessor
 		//		add it to allMinimalSegments 
 		for (Segment seg : givenSegments) {
 
-			//			make a local variable with given and implicit segments 
-			//			iterate over those (indexed) and make a boolean with hasSubSegment 
-			//			if for loop never changes the boolean, add it 
-			//			
-			//			boolean passes 
-			//			
-			//			for (Segment seg : implicitSegments) {
-			//				
-			//			}
-
 			if (seg.collectOrderedPointsOnSegment(_pointDatabase.toSet()).size() == 2) {
 				allMinimalSegments.add(seg);
 			}
@@ -176,10 +166,10 @@ public class Preprocessor
 		Set<Segment> allMinimalSegments = _allMinimalSegments;
 		Set<Segment> nonMinimalSegments = new HashSet<Segment>();
 
-		return constructAllNonMinimalSegments(allMinimalSegments, allMinimalSegments, nonMinimalSegments);
+		return constructAllNonMinimalSegments(allMinimalSegments.stream().toList(), allMinimalSegments, nonMinimalSegments);
 	}
 
-	private Set<Segment> constructAllNonMinimalSegments(Set<Segment> allMinimalSegments, Set<Segment> workList, Set<Segment> nonMinimalSegments) {
+	private Set<Segment> constructAllNonMinimalSegments(List<Segment> allMinimalSegments, Set<Segment> workList, Set<Segment> nonMinimalSegments) {
 
 		//	base case: when the work list is empty, no non-minimal segments have been found
 		//			   thus, there are no more to create, return them as is
@@ -188,31 +178,40 @@ public class Preprocessor
 		//	cast your workList and nonMinimalSegments to list so they're iterable
 		Set<Segment> newWorkList = new HashSet<Segment>();
 		List<Segment> wList = workList.stream().toList();
-		List<Segment> nonMinSeg = nonMinimalSegments.stream().toList();
 
 		//for each item in the workList 
-		for (int index_1 = 0; index_1 < wList.size(); index_1++) {
+				
+		for (Segment workSeg : wList) {
 			//for each item in the nonMinimalSegments 
-			for (int index_2 = 0; index_2 < nonMinSeg.size(); index_2++) {
-
+			for (Segment minSeg : allMinimalSegments) {
+				
 				//	if there exists a segment that coincide without overlap
-				Segment seg1 = wList.get(index_1);
-				Segment seg2 = nonMinSeg.get(index_2);
-				if (seg1.coincideWithoutOverlap(seg2) && seg2.coincideWithoutOverlap(seg1)) {
+				Segment seg1 = workSeg;
+				Segment seg2 = minSeg;
+				
+				createSegment(seg1, seg2, newWorkList, nonMinimalSegments);
+			}
+		}
+	
+		return constructAllNonMinimalSegments(allMinimalSegments, newWorkList, nonMinimalSegments);
+	}
+	
+	public void createSegment(Segment seg1, Segment seg2, Set<Segment> newWorkList, Set<Segment> nonMinimalSegments) {
+		
+		if (seg1.coincideWithoutOverlap(seg2) && seg2.coincideWithoutOverlap(seg1)) {
 
-					//	for which there is also a shared vertex (meaning the segments touch)
-					//	find it, and use the other two segments to create a new segment 
-					Point point1 = seg1.other(seg1.sharedVertex(seg2));
-					Point point2 = seg2.other(seg1.sharedVertex(seg2));
+			//	for which there is also a shared vertex (meaning the segments touch)
+			//	find it, and use the other two segments to create a new segment 
+			if (seg1.sharedVertex(seg2) != null) {
+				Point point1 = seg1.other(seg1.sharedVertex(seg2));
+				Point point2 = seg2.other(seg1.sharedVertex(seg2));
 
-					if (point1 != null && point2 != null) {
+				if (point1 != null && point2 != null) {
 
-						newWorkList.add(new Segment(point1, point2));
-						nonMinimalSegments.add(new Segment(point1, point2));	
-					}
+					newWorkList.add(new Segment(point1, point2));
+					nonMinimalSegments.add(new Segment(point1, point2));
 				}
 			}
 		}
-		return constructAllNonMinimalSegments(allMinimalSegments, newWorkList, nonMinimalSegments);
 	}
 }
